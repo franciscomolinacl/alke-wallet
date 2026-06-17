@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+  <title>Alke Wallet - Inicio</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-body text-body" id="pagLogin">
+
+  <header class="col-6 col-md-3 col-sm-5 mx-auto d-block mt-5 text-center">
+    <a href="./index.html">
+    <img src="./assets/img/logo.webp" class="img-fluid sombra-png" alt="Logo Alke Wallet">
+    </a>
+  </header>
+
+  <main class="flex-grow-1 container d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center">
+      <div class="col-12 col-md-6 col-lg-6">
+
+        <form id="formLogin" action="" method="post" class="needs-validation" novalidate>
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text bg-transparent border-end-0 ps-4 text-secondary iconos icono-email curva-top-left"></span>
+            <input class="form-control p-3 border-start-0 curva-bottom-right" id="email" type="email" name="email"
+              placeholder="Escriba su Email" required />
+          </div>
+
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text bg-transparent border-end-0 ps-4 text-secondary iconos icono-password curva-top-left"></span>
+            <input class="form-control p-3 border-start-0 border-end-0" id="password" type="password" name="password"
+              placeholder="Escriba su clave" required />
+            <button
+              class="btn border border-start-0 bg-transparent text-secondary px-3 input-group-text iconos icono-eye-closed curva-bottom-right"
+              type="button" id="btnTogglePassword">
+            </button>
+          </div>
+
+          <div class="mb-3 mt-4">
+            <button class="btn btn-primary w-100 p-3 rounded-5" id="btn-enviar" type="submit" name="ingresar">
+              <span class="spinner-border spinner-border-sm d-none me-2" id="btn-spinner" role="status"
+                aria-hidden="true"></span>
+              <span id="btn-texto">Iniciar sesión</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="row my-3 px-2">
+          <div class="col-6 text-start">
+            <a href="./register.html" class="text-decoration-none text-primary fw-medium small">Crear cuenta</a>
+          </div>
+
+          <div class="col-6 text-end">
+            <a href="./recovery.html" class="text-decoration-none text-secondary small">¿Olvidó su clave?</a>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="mx-auto mb-3">
+    <div class="form-check form-switch custom-switch-container">
+      <input class="form-check-input switch-iconos" type="checkbox" role="switch" id="btnDarkLight">
+      <label class="form-check-label visually-hidden" for="btnDarkLight">Cambiar modo</label>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./assets/js/script.js" type="module"></script>
+
+</body>
+
+</html>

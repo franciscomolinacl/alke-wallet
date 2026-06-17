@@ -1,0 +1,109 @@
+/* Transición suave para toda la página */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Color personalizado premium solo para el Modo Claro */
+[data-bs-theme="light"] body,
+[data-bs-theme="light"] input {
+  background-color: #f4f4f0 !important;
+}
+
+/* Sombra para logo en el Modo Claro */
+[data-bs-theme="light"] .sombra-png {
+  filter: drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.7));
+}
+
+/* Switch modo Oscuro/Claro */
+.switch-iconos {
+  width: 4em !important;
+  height: 2em !important;
+  cursor: pointer;  
+  background-size: 40% !important; 
+  background-repeat: no-repeat !important;
+  background-image: url("../img/icons/moon.svg") !important;
+  background-color: #1e1e24 !important;
+  border-color: #373742 !important;
+  background-position-x: 20% !important;
+}
+
+.switch-iconos:checked {
+  background-size: 40% !important; 
+  background-image: url("../img/icons/sun.svg") !important;
+  background-color: #f4f4f0 !important;
+  background-position-x: 80% !important;
+}
+
+/* Complemento input es inválido - rojo fijo para ambos modos */
+.was-validated .input-group:has(.form-control:invalid),
+.input-group:has(.form-control.is-invalid) {
+
+  .input-group-text,
+  .form-control {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border-color: #dc3545 !important;
+  }
+
+  .input-group-text i,
+  .form-control {
+    color: #dc3545 !important;
+  }
+}
+
+.was-validated .form-control:invalid:focus {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Complemento input es válido - verde fijo para ambos modos */
+.was-validated .input-group:has(.form-control:valid),
+.input-group:has(.form-control.is-valid) {
+
+  .input-group-text,
+  .form-control {
+    background-color: rgba(162, 233, 129, 0.1) !important;
+    border-color: #1ba000 !important;
+  }
+
+  .input-group-text i,
+  .form-control {
+    color: #1ba000 !important;
+  }
+}
+
+/* Configuración base iconos */
+.iconos {
+  width: 4em !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 16px 16px !important;
+}
+
+/* Iconos */
+.icono-email {
+  background-image: url("../img/icons/email.svg") !important;
+}
+.icono-password {
+  background-image: url("../img/icons/password.svg") !important;
+}
+.icono-eye {
+  background-image: url("../img/icons/eye.svg") !important;
+}
+.icono-eye-closed {
+  background-image: url("../img/icons/eye-closed.svg") !important;
+}
+.icono-user {
+  background-image: url("../img/icons/user.svg") !important;
+}
+.icono-fecha {
+  background-image: url("../img/icons/fecha.svg") !important;
+}
+
+/* Curvas esquinas */
+.curva-top-left {
+  border-top-left-radius: 2rem !important;
+  border-bottom-left-radius: 0px !important;
+}
+.curva-bottom-right {
+  border-bottom-right-radius: 2rem !important;
+  border-top-right-radius: 0px !important;
+}

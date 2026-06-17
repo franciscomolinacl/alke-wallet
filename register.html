@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+  <title>Alke Wallet - Registro</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-body text-body" id="pagRegister">
+
+  <header class="container mb-4">
+    <div class="row align-items-center justify-content-center g-2 g-md-3">
+
+      <div class="col-4 col-sm-3 col-md-1 text-center text-md-end">
+        <a href="./index.html">
+          <img src="./assets/img/logo.webp" class="img-fluid sombra-png mx-auto d-block" alt="Logo Alke Wallet">
+        </a>
+      </div>
+
+      <div class="col-12 col-md-auto text-center text-md-start mt-2 mt-md-0">
+        <h1 class="m-0 fw-bold fs-3">Registro de cuenta</h1>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="flex-grow-1 container d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center">
+      <div class="col-12 col-md-6 col-lg-6">
+
+        <form id="formRegister" action="" method="post" class="needs-validation" novalidate>
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text bg-transparent border-end-0 ps-4 rounded-start-3 text-secondary iconos icono-user"></span>
+            <input class="form-control p-3 border-start-0 rounded-end-3" id="nombre" type="text" name="nombre"
+              placeholder="Nombre completo" required />
+          </div>
+
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text bg-transparent border-end-0 ps-4 rounded-start-3 text-secondary iconos icono-fecha"></span>
+            <input class="form-control p-3 border-start-0 rounded-end-3" id="nacimiento" type="date" name="nacimiento"
+              placeholder="Fecha nacimiento" required />
+          </div>
+
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text bg-transparent border-end-0 ps-4 rounded-start-3 text-secondary iconos icono-email"></span>
+            <input class="form-control p-3 border-start-0 rounded-end-3" id="email" type="email" name="email"
+              placeholder="Correo electrónico" required />
+          </div>
+
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text bg-transparent border-end-0 ps-4 rounded-start-3 text-secondary iconos icono-password"></span>
+            <input class="form-control p-3 border-start-0 border-end-0" id="password" type="password" name="password"
+              placeholder="Contraseña" required />
+            <button
+              class="btn border border-start-0 bg-transparent rounded-end-3 text-secondary px-3 input-group-text iconos icono-eye-closed"
+              type="button" id="btnTogglePassword">
+            </button>
+          </div>
+
+          <div class="mb-3 mt-4">
+            <button class="btn btn-primary w-100 p-3 rounded-5" id="btn-enviar" type="submit" name="register">
+              <span class="spinner-border spinner-border-sm d-none me-2" id="btn-spinner" role="status"
+                aria-hidden="true"></span>
+              <span id="btn-texto">Registrarse</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="row my-3 px-2">
+          <div class="col-6 text-start">
+            <a href="./login.html" class="text-decoration-none text-primary fw-medium small">Volver</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="mx-auto mb-3">
+    <div class="form-check form-switch custom-switch-container">
+      <input class="form-check-input switch-iconos" type="checkbox" role="switch" id="btnDarkLight">
+      <label class="form-check-label visually-hidden" for="btnDarkLight">Cambiar modo</label>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./assets/js/script.js" type="module"></script>
+
+</body>
+
+</html>
