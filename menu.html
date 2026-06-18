@@ -13,74 +13,75 @@
 
 <body class="d-flex flex-column min-vh-100 bg-body text-body" id="pagMenu">
 
-  <nav class="navbar d-none d-md-block navbar-expand-lg bg-nav">
-    <div class="container-fluid">
-      <div class="navbar-brand"><img src="./assets/img/logo-hor.webp" class="col-md-2" alt="Alke Wallet"></div>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div id="navbarNavAltMarkup">
-        <nav class="container py-2">
-          <div class="row text-center fs-menu">
+  <!-- Menu navbar para pantallas grandes - Inicio -->
+  <nav class="navbar d-none d-md-block navbar-expand-lg bg-nav py-3 border-bottom border-secondary">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
 
-            <div class="col">
-              <a href="./menu.html" class="text-decoration-none active-nav-link">
-                <div class="icono-home mx-auto mb-1"></div>
-                <span>Inicio</span>
-              </a>
-            </div>
-
-            <div class="col">
-              <a href="./deposit.html" class="text-decoration-none">
-                <div class="icono-deposit mx-auto mb-1"></div>
-                <span>Depositar</span>
-              </a>
-            </div>
-
-            <div class="col">
-              <a href="./sendmoney.html" class="text-decoration-none">
-                <div class="icono-transfer mx-auto mb-1"></div>
-                <span>Transferir</span>
-              </a>
-            </div>
-
-            <div class="col">
-              <a href="./transactions.html" class="text-decoration-none">
-                <div class="icono-history mx-auto mb-1"></div>
-                <span>Historial</span>
-              </a>
-            </div>
-
-            <div class="col">
-              <a href="./perfil.html" class="text-decoration-none">
-                <div class="icono-perfil mx-auto mb-1"></div>
-                <span>Perfil</span>
-              </a>
-            </div>
-
-            <div class="col">
-              <a href="./more.html" class="text-decoration-none">
-                <div class="icono-mas mx-auto mb-1"></div>
-                <span>Otros</span>
-              </a>
-            </div>
-
-            <div class="col">
-              <a href="#" class="text-decoration-none">
-                <div class="icono-salir mx-auto mb-1"></div>
-                <span>Salir</span>
-              </a>
-            </div>
-
-          </div>
-        </nav>
+      <div class="navbar-brand m-0">
+        <img src="./assets/img/logo-hor.webp" alt="Alke Wallet" style="height: 40px; width: auto;">
       </div>
+
+      <div id="navbarNavAltMarkup" class="d-flex align-items-center">
+        <div class="d-flex gap-4 text-center fs-menu">
+
+          <div>
+            <a href="./menu.html" class="text-decoration-none active-nav-link d-block">
+              <div class="icono-home mx-auto mb-1"></div>
+              <span style="font-size: 0.85rem;">Inicio</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./deposit.html" class="text-decoration-none d-block">
+              <div class="icono-deposit mx-auto mb-1"></div>
+              <span style="font-size: 0.85rem;">Depositar</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./sendmoney.html" class="text-decoration-none d-block">
+              <div class="icono-transfer mx-auto mb-1"></div>
+              <span style="font-size: 0.85rem;">Transferir</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./transactions.html" class="text-decoration-none d-block">
+              <div class="icono-history mx-auto mb-1"></div>
+              <span style="font-size: 0.85rem;">Historial</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./perfil.html" class="text-decoration-none d-block">
+              <div class="icono-perfil mx-auto mb-1"></div>
+              <span style="font-size: 0.85rem;">Perfil</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./more.html" class="text-decoration-none d-block">
+              <div class="icono-mas mx-auto mb-1"></div>
+              <span style="font-size: 0.85rem;">Otros</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="#" class="text-decoration-none d-block">
+              <div class="icono-salir mx-auto mb-1"></div>
+              <span style="font-size: 0.85rem;">Salir</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </nav>
 
   <main class="mb-5">
 
+    <!-- Nombre usuario y saldo en moviles - Inicio -->
     <div class="d-md-none card-saldo text-white p-4 mb-6 shadow-sm">
       <div class="d-flex align-items-center mb-3">
         <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial"></div>
@@ -96,17 +97,18 @@
       </div>
     </div>
 
-    <!-- Menu flotante -->
+    <!-- Contenedor flotante -->
     <div class="contenedor-flotante-subir ">
 
-      <!-- Tarjetas de saludo y saldo pantallas grandes -->
+      <!-- Nombre usuario y saldo en pantallas grandes - Inicio -->
       <div class="row g-3 mb-4 d-none d-md-flex">
 
         <div class="col-12 col-md-6">
           <div class="card bg-fondo p-4 h-100 shadow-sm border-0">
             <div class="d-flex align-items-center h-100">
               <div
-                class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial shadow-sm"></div>
+                class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial shadow-sm">
+              </div>
               <div class="ms-3">
                 <p class="mb-0 text-secondary small">Hola,</p>
                 <h5 class="mb-0 fw-bold nombre-usuario"></h5>
@@ -126,8 +128,7 @@
 
       </div>
 
-
-
+      <!-- Menu flotante - Inicio -->
       <div class="card bg-card p-3 rounded-4 border-0 mb-4 menu-flotante d-md-none">
         <div class="row text-center">
           <div class="col-4">
@@ -226,8 +227,7 @@
       </div>
     </div>
 
-
-    <!-- Menu footer celular -->
+    <!-- Menu footer moviles -->
     <nav class="container bg-nav py-2 d-md-none">
       <div class="row text-center fs-menu">
 

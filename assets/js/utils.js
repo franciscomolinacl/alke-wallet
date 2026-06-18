@@ -111,13 +111,13 @@ export function hashPassword(password, modo) {
     } else if (modo == 2) {
         let textoLargo = atob(password);
         return textoLargo.split("||")[0];
-    } 
+    }
 }
 
 // Datos de usuario logueado
 export function cargarDatosUsuario() {
     const userLogueado = localStorage.getItem("usuario_logueado");
-    
+
     if (!userLogueado) {
         window.location.href = "./login.html";
         return;
@@ -135,6 +135,6 @@ export function cargarDatosUsuario() {
 
     } else {
         localStorage.removeItem("usuario_logueado");
-        redireccion("login.html",  1);
+        redireccion("login.html", 1);
     }
 }
