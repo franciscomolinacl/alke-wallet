@@ -37,7 +37,7 @@ function pagLogin() {
                 if (usuarioEncontrado) {
                     loginExitoso = true;
                     localStorage.setItem("login", "true");
-                    localStorage.setItem("usuarioActual", usuarioEncontrado.nombre);
+                    localStorage.setItem("usuario_logueado", usuarioEncontrado.email);
                     $("#email, #password").removeClass("is-invalid");
                     $("#email, #password").addClass("is-valid");
                     $("<div>", {
@@ -242,9 +242,16 @@ function pagReset() {
     Utils.activarValidacion();
 }
 
+// Pagina Menu
+function pagMenu() {
+    Utils.modoDarkLight();
+    Utils.cargarDatosUsuario();
+}
+
 // Registro de funciones de paginas
 window.pagIndex = pagIndex;
 window.pagLogin = pagLogin;
 window.pagRegister = pagRegister;
 window.pagRecovery = pagRecovery;
 window.pagReset = pagReset;
+window.pagMenu = pagMenu;

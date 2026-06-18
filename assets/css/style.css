@@ -1,15 +1,33 @@
 /* Importacion de modulos */
 @import url("./icons.css");
 
-/* Transición suave para toda la página */
-body, .navbar, .btn, .form-control, .input-group-text {
+/* Transición suave cambio modos */
+body,
+.navbar,
+.btn,
+.form-control,
+.input-group-text {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-/* Color personalizado premium solo para el Modo Claro */
-[data-bs-theme="light"] body,
-[data-bs-theme="light"] input {
-  background-color: #f4f4f0 !important;
+/* Modo Claro Estilos */
+[data-bs-theme="light"] {
+  --modo-fondo: #e2e1e1;
+  --modo-tarjetas: #ffffff;
+  --modo-texto: #212529;
+}
+
+/* Modo Oscuro Estilos */
+[data-bs-theme="dark"] {
+  --modo-fondo: #1b1b1b;
+  --modo-tarjetas: #23272b;
+  --modo-texto: #ebf5ff;
+}
+
+/* Etiquetas principales */
+body,
+input {
+  background-color: var(--modo-fondo);
 }
 
 /* Sombra para logo en el Modo Claro */
@@ -21,7 +39,7 @@ body, .navbar, .btn, .form-control, .input-group-text {
 .switch-iconos {
   width: 4em !important;
   height: 2em !important;
-  cursor: pointer;  
+  cursor: pointer;
   background-size: 40% !important;
   background-repeat: no-repeat !important;
   background-image: url("../img/icons/moon.svg") !important;
@@ -38,38 +56,44 @@ body, .navbar, .btn, .form-control, .input-group-text {
 }
 
 /* Complemento input es inválido - rojo fijo para ambos modos */
-.was-validated .input-group:has(.form-control:invalid),
-.input-group:has(.form-control.is-invalid) {
-  .input-group-text,
-  .form-control {
-    background-color: rgba(220, 53, 69, 0.1) !important;
-    border-color: #dc3545 !important;
-  }
-
-  .input-group-text i,
-  .form-control {
-    color: #dc3545 !important;
-  }
+/* Fondo y bordes rojos para el texto del grupo y el input */
+.was-validated .input-group:has(.form-control:invalid) .input-group-text,
+.was-validated .input-group:has(.form-control:invalid) .form-control,
+.input-group:has(.form-control.is-invalid) .input-group-text,
+.input-group:has(.form-control.is-invalid) .form-control {
+  background-color: rgba(220, 53, 69, 0.1) !important;
+  border-color: #dc3545 !important;
 }
 
+/* Color de texto e íconos en rojo */
+.was-validated .input-group:has(.form-control:invalid) .input-group-text i,
+.was-validated .input-group:has(.form-control:invalid) .form-control,
+.input-group:has(.form-control.is-invalid) .input-group-text i,
+.input-group:has(.form-control.is-invalid) .form-control {
+  color: #dc3545 !important;
+}
+
+/* Sombra roja cuando el usuario hace foco en un campo con error */
 .was-validated .form-control:invalid:focus {
   box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
 }
 
 /* Complemento input es válido - verde fijo para ambos modos */
-.was-validated .input-group:has(.form-control:valid),
-.input-group:has(.form-control.is-valid) {
+/* Fondo y bordes verdes para el texto del grupo y el input */
+.was-validated .input-group:has(.form-control:valid) .input-group-text,
+.was-validated .input-group:has(.form-control:valid) .form-control,
+.input-group:has(.form-control.is-valid) .input-group-text,
+.input-group:has(.form-control.is-valid) .form-control {
+  background-color: rgba(162, 233, 129, 0.1) !important;
+  border-color: #1ba000 !important;
+}
 
-  .input-group-text,
-  .form-control {
-    background-color: rgba(162, 233, 129, 0.1) !important;
-    border-color: #1ba000 !important;
-  }
-
-  .input-group-text i,
-  .form-control {
-    color: #1ba000 !important;
-  }
+/* Color de texto e íconos en verde */
+.was-validated .input-group:has(.form-control:valid) .input-group-text i,
+.was-validated .input-group:has(.form-control:valid) .form-control,
+.input-group:has(.form-control.is-valid) .input-group-text i,
+.input-group:has(.form-control.is-valid) .form-control {
+  color: #1ba000 !important;
 }
 
 /* Curvas esquinas */
@@ -77,7 +101,131 @@ body, .navbar, .btn, .form-control, .input-group-text {
   border-top-left-radius: 2rem !important;
   border-bottom-left-radius: 0px;
 }
+
 .curva-bottom-right {
   border-bottom-right-radius: 2rem !important;
   border-top-right-radius: 0px;
+}
+
+/* CSS del menu */
+.card-saldo {
+  background: linear-gradient(135deg, #0052cc 0%, #00a3ff 100%);
+  padding: 2rem 1.5rem !important;
+}
+
+.card a:active {
+  opacity: 0.6;
+}
+
+.avatar-inicial {
+  width: 45px;
+  height: 45px;
+  font-size: 1.2rem;
+  color: #0052cc !important;
+  background-color: var(--modo-tarjetas);
+}
+
+.text-wallet-light {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.contenedor-flotante-subir {
+  position: relative;
+  padding: 55px;
+  min-height: 70vh;
+  padding-bottom: 70px;
+}
+
+.bg-card,
+.bg-card a {
+  background-color: var(--modo-tarjetas);
+  color: var(--modo-texto);
+}
+
+.bg-fondo,
+.bg-fondo a {
+  background-color: var(--modo-fondo);
+  color: var(--modo-texto);
+}
+
+.bg-nav,
+.bg-nav a {
+  background-color: #1b1b1b;
+  color: #ebf5ff !important;
+}
+
+.menu-flotante {
+  position: relative;
+  z-index: 2;
+  margin-top: -50px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Estilos para los bloques de promociones */
+.card-promo {
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card-promo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-promo:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+.card-promo-grad1 {
+  background: linear-gradient(135deg, #0052cc 0%, #0077ff 100%);
+}
+
+.card-promo-grad2 {
+  background: linear-gradient(135deg, #00a3ff 0%, #00c2ff 100%);
+}
+
+/* Arreglo menu superior e inferior */
+.fs-menu {
+  font-size: 0.75rem;
+}
+
+/* Corrije iluminacion del menu activo */
+a.active-nav-link,
+a.active-nav-link span,
+a.active-nav-link div {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  font-weight: bold !important;
+}
+
+a.active-nav-link .icono-home,
+a.active-nav-link .icono-transfer,
+a.active-nav-link .icono-perfil {
+  opacity: 1 !important;
+  filter: invert(100%) sepia(50%) saturate(50%) hue-rotate(0deg) brightness(150%) contrast(100%);
+}
+
+
+/* Solo moviles */
+@media (max-width: 767.98px) {
+
+  /* CSS del menu */
+  .card-saldo {
+    min-height: 250px;
+  }
+
+  /* CSS contenedor flotante */
+  .contenedor-flotante-subir {
+    background-color: var(--modo-fondo);
+    position: relative;
+    z-index: 2;
+    margin-top: -30px;
+    border-radius: 24px 24px 0 0;
+    padding: 20px;
+    min-height: 70vh;
+    padding-bottom: 70px;
+  }
+
 }

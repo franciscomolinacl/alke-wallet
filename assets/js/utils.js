@@ -94,8 +94,8 @@ export function primerUsuario() {
         const primerUsuario = {
             email: "fran@correo.com",
             password: hashPassword("laclave1234", 1),
-            nombre: "Francisco",
-            nacimiento: "01-01-1980",
+            nombre: "Francisco Molina",
+            nacimiento: "19-02-1980",
         };
 
         listaUsuarios.push(primerUsuario);
@@ -112,4 +112,29 @@ export function hashPassword(password, modo) {
         let textoLargo = atob(password);
         return textoLargo.split("||")[0];
     } 
+}
+
+// Datos de usuario logueado
+export function cargarDatosUsuario() {
+    const userLogueado = localStorage.getItem("usuario_logueado");
+    
+    if (!userLogueado) {
+        window.location.href = "./login.html";
+        return;
+    }
+
+    const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const usuarioActual = listaUsuarios.find(user => user.email === userLogueado);
+
+    if (usuarioActual) {
+        const nombreCompleto = usuarioActual.nombre;
+        const primeraLetra = nombreCompleto.charAt(0).toUpperCase();
+
+        $(".nombre-usuario").text(nombreCompleto);
+        $(".avatar-inicial").text(primeraLetra);
+
+    } else {
+        localStorage.removeItem("usuario_logueado");
+        redireccion("login.html",  1);
+    }
 }

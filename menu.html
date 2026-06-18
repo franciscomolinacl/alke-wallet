@@ -8,49 +8,257 @@
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
   <link rel="stylesheet" href="./assets/css/style.css" />
   <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
-  <title>Alke Wallet - Inicio</title>
+  <title>Alke Wallet - Menu</title>
 </head>
 
-<body class="d-flex flex-column min-vh-100 bg-body text-body" id="pagIndex">
+<body class="d-flex flex-column min-vh-100 bg-body text-body" id="pagMenu">
 
-  <nav class="navbar navbar-expand-lg pt-2">
-    <div class="container justify-content-end">
-      <div class="form-check form-switch custom-switch-container">
-        <input class="form-check-input switch-iconos" type="checkbox" role="switch" id="btnDarkLight">
-        <label class="form-check-label visually-hidden" for="btnDarkLight">Cambiar modo</label>
+  <nav class="navbar d-none d-md-block navbar-expand-lg bg-nav">
+    <div class="container-fluid">
+      <div class="navbar-brand"><img src="./assets/img/logo-hor.webp" class="col-md-2" alt="Alke Wallet"></div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarNavAltMarkup">
+        <nav class="container py-2">
+          <div class="row text-center fs-menu">
+
+            <div class="col">
+              <a href="./menu.html" class="text-decoration-none active-nav-link">
+                <div class="icono-home mx-auto mb-1"></div>
+                <span>Inicio</span>
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="./deposit.html" class="text-decoration-none">
+                <div class="icono-deposit mx-auto mb-1"></div>
+                <span>Depositar</span>
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="./sendmoney.html" class="text-decoration-none">
+                <div class="icono-transfer mx-auto mb-1"></div>
+                <span>Transferir</span>
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="./transactions.html" class="text-decoration-none">
+                <div class="icono-history mx-auto mb-1"></div>
+                <span>Historial</span>
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="./perfil.html" class="text-decoration-none">
+                <div class="icono-perfil mx-auto mb-1"></div>
+                <span>Perfil</span>
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="./more.html" class="text-decoration-none">
+                <div class="icono-mas mx-auto mb-1"></div>
+                <span>Otros</span>
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="#" class="text-decoration-none">
+                <div class="icono-salir mx-auto mb-1"></div>
+                <span>Salir</span>
+              </a>
+            </div>
+
+          </div>
+        </nav>
       </div>
     </div>
   </nav>
 
-  <main class="flex-grow-1 container d-flex align-items-center justify-content-center">
-    <div class="row w-100 justify-content-center text-center">
-      <div class="col-12 col-md-8 col-lg-6">
+  <main class="mb-5">
 
-        <div class="p-4 rounded-5 border-0">
-          <img src="./assets/img/logo.webp" class="img-fluid mb-4 mx-auto d-block sombra-png col-6 col-md-4"
-            alt="Logo Alke Wallet">
+    <div class="d-md-none card-saldo text-white p-4 mb-6 shadow-sm">
+      <div class="d-flex align-items-center mb-3">
+        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial"></div>
+        <div class="ms-3">
+          <p class="mb-0 text-wallet-light small">Hola,</p>
+          <h5 class="mb-0 fw-bold nombre-usuario"></h5>
+        </div>
+      </div>
 
-          <h1 class="fw-bold mb-3">Bienvenido a Alke Wallet</h1>
-          <p class="text-secondary mb-4">
-            Administra tus activos financieros de manera digital, fácil y segura. <br>
-            Simula depósitos, transferencias y revisa tus movimientos en tiempo real.
+      <div class="mt-2 text-center text-md-start">
+        <small class="text-wallet-light d-block">Saldo Disponible</small>
+        <h2 class="display-5 fw-bold my-1" id="saldo-usuario">$15.000</h2>
+      </div>
+    </div>
+
+    <!-- Menu flotante -->
+    <div class="contenedor-flotante-subir ">
+
+      <!-- Tarjetas de saludo y saldo pantallas grandes -->
+      <div class="row g-3 mb-4 d-none d-md-flex">
+
+        <div class="col-12 col-md-6">
+          <div class="card bg-fondo p-4 h-100 shadow-sm border-0">
+            <div class="d-flex align-items-center h-100">
+              <div
+                class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial shadow-sm"></div>
+              <div class="ms-3">
+                <p class="mb-0 text-secondary small">Hola,</p>
+                <h5 class="mb-0 fw-bold nombre-usuario"></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="card card-saldo text-white p-4 h-100 shadow-sm border-0">
+            <div class="text-center text-md-start d-flex flex-column justify-content-center h-100">
+              <small class="text-wallet-light d-block text-uppercase">Saldo Disponible</small>
+              <h2 class="display-5 fw-bold my-1" id="saldo-usuario">$15.000</h2>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="card bg-card p-3 rounded-4 border-0 mb-4 menu-flotante d-md-none">
+        <div class="row text-center">
+          <div class="col-4">
+            <a href="./deposit.html" class="text-decoration-none">
+              <div class="icono-deposit mx-auto mb-1"></div>
+              <small class="fw-medium">Depositar</small>
+            </a>
+          </div>
+          <div class="col-4">
+            <a href="./sendmoney.html" class="text-decoration-none">
+              <div class="icono-transfer mx-auto mb-1"></div>
+              <small class="fw-medium">Transferir</small>
+            </a>
+          </div>
+          <div class="col-4">
+            <a href="./transactions.html" class="text-decoration-none">
+              <div class="icono-history mx-auto mb-1"></div>
+              <small class="fw-medium">Historial</small>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de pagos -->
+      <h6 class="fw-bold mb-3 text-secondary">Lista de Pagos</h6>
+      <div class="card bg-card p-4 rounded-4 shadow-lg border-0 mb-5">
+        <div class="row text-center g-3">
+          <div class="col-3">
+            <div class="icono-agua mx-auto mb-2"></div>
+            <span class="d-block small">Agua</span>
+          </div>
+          <div class="col-3">
+            <div class="icono-luz mx-auto mb-2"></div>
+            <span class="d-block small">Luz</span>
+          </div>
+          <div class="col-3">
+            <div class="icono-phone mx-auto mb-2"></div>
+            <span class="d-block small">Celular</span>
+          </div>
+          <div class="col-3">
+            <div class="icono-wifi mx-auto mb-2"></div>
+            <span class="d-block small">Internet</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Descuentos y promociones -->
+      <h6 class="fw-bold mb-3 mt-4 text-secondary">Promociones para ti</h6>
+
+      <div class="card card-promo card-promo-grad1 text-white p-3 mb-3 border-0 shadow-sm">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <span class="badge bg-light text-primary mb-1 fw-bold">Beneficio AlKe</span>
+            <h6 class="mb-1 fw-bold">20% de dcto en Combustible</h6>
+            <small class="text-white-80">Pagando con tu saldo AlKe Wallet</small>
+          </div>
+          <div class="fs-1 px-2">⛽</div>
+        </div>
+      </div>
+
+      <div class="card card-promo card-promo-grad2 text-white p-3 mb-3 border-0 shadow-sm">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <span class="badge bg-dark text-white mb-1 fw-bold">Destacado</span>
+            <h6 class="mb-1 fw-bold">Pide tu Tarjeta Prepago Virtual</h6>
+            <small class="text-white-80">¡Es gratis y la activas en un segundo!</small>
+          </div>
+          <div class="fs-1 px-2">💳</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="fixed-bottom border-top border-secondary text-center text-secondary small">
+    <!-- Footer pantallas grandes -->
+    <div class="d-none d-md-block border-top border-secondary py-3">
+      <div class="d-flex align-items-center justify-content-between container">
+
+        <div class="text-center flex-grow-1">
+          <p class="m-0 small">
+            &copy; 2026 Alke Wallet <br>
+            Evaluación Módulo 2 Talento Digital <br>
+            <a href="https://www.franciscomolina.cl" target="_blank" class="text-decoration-none fw-medium">Francisco
+              Molina</a>
           </p>
+        </div>
 
-          <div class="d-grid gap-3 col-10 mx-auto">
-            <a href="./login.html" class="btn btn-primary p-3 rounded-5 fw-medium">Iniciar Sesión</a>
-            <a href="./register.html" class="btn btn-outline-secondary p-3 rounded-5 fw-medium">Regístrese</a>
+        <div class="d-flex justify-content-end">
+          <div class="form-check form-switch custom-switch-container m-0">
+            <input class="form-check-input switch-iconos" type="checkbox" role="switch" id="btnDarkLight">
+            <label class="form-check-label visually-hidden" for="btnDarkLight">Cambiar modo</label>
           </div>
         </div>
 
       </div>
     </div>
-  </main>
 
-  <footer class="py-3 px-2 text-center text-secondary small border-top">
-    <p class="m-0">&copy; 2026 Alke Wallet <br>
-      Evaluación Módulo 2 Talento Digital <br>
-      <a href="https://www.franciscomolina.cl" target="_blank">Francisco Molina</a>
-    </p>
+
+    <!-- Menu footer celular -->
+    <nav class="container bg-nav py-2 d-md-none">
+      <div class="row text-center fs-menu">
+
+        <div class="col">
+          <a href="./menu.html" class="text-decoration-none active-nav-link">
+            <div class="icono-home mx-auto mb-1"></div>
+            <span>Inicio</span>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="./sendmoney.html" class="text-decoration-none">
+            <div class="icono-transfer mx-auto mb-1"></div>
+            <span>Transferir</span>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="./profile.html" class="text-decoration-none">
+            <div class="icono-perfil mx-auto mb-1"></div>
+            <span>Perfil</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="./more.html" class="text-decoration-none">
+            <div class="icono-mas mx-auto mb-1"></div>
+            <span>Otros</span>
+          </a>
+        </div>
+      </div>
+    </nav>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

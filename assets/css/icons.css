@@ -1,4 +1,4 @@
-/* Configuración base iconos */
+/* Iconos formularios */
 .icono-email,
 .icono-password,
 .icono-eye,
@@ -15,18 +15,90 @@
 .icono-email {
   background-image: url("../img/icons/email.svg");
 }
+
 .icono-password {
   background-image: url("../img/icons/password.svg");
 }
+
 .icono-eye {
   background-image: url("../img/icons/eye.svg");
 }
+
 .icono-eye-closed {
   background-image: url("../img/icons/eye-closed.svg");
 }
+
 .icono-user {
   background-image: url("../img/icons/user.svg");
 }
+
 .icono-fecha {
   background-image: url("../img/icons/fecha.svg");
+}
+
+
+/* Iconos menu y otros */
+.icono-home,
+.icono-transfer,
+.icono-perfil,
+.icono-deposit,
+.icono-history,
+.icono-phone,
+.icono-luz,
+.icono-wifi,
+.icono-agua,
+.icono-salir,
+.icono-mas  {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+/* Iconos */
+.icono-home {
+  background-image: url("../img/icons/home.svg");
+}
+
+.icono-transfer {
+  background-image: url("../img/icons/transfer.svg");
+}
+
+.icono-perfil {
+  background-image: url("../img/icons/perfil.svg");
+}
+
+.icono-deposit {
+  background-image: url("../img/icons/deposit.svg");
+}
+
+.icono-history {
+  background-image: url("../img/icons/history.svg");
+}
+
+.icono-phone {
+  background-image: url("../img/icons/phone.svg");
+}
+
+.icono-luz {
+  background-image: url("../img/icons/luz.svg");
+}
+
+.icono-wifi {
+  background-image: url("../img/icons/wifi.svg");
+}
+
+.icono-agua {
+  background-image: url("../img/icons/agua.svg");
+}
+
+.icono-salir {
+  background-image: url("../img/icons/salir.svg");
+}
+
+.icono-mas {
+  background-image: url("../img/icons/mas.svg");
 }
