@@ -8,10 +8,10 @@
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
   <link rel="stylesheet" href="./assets/css/style.css" />
   <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
-  <title>Alke Wallet - Registro cuenta</title>
+  <title>Alke Wallet - Recuperar cuenta</title>
 </head>
 
-<body class="d-flex flex-column min-vh-100 bg-body text-body" id="pagRegister">
+<body class="d-flex flex-column min-vh-100 bg-body text-body" id="pagRecovery">
 
   <header class="container mb-4">
     <div class="row align-items-center justify-content-center g-2 g-md-3">
@@ -23,9 +23,10 @@
       </div>
 
       <div class="col-12 col-md-auto text-center text-md-start mt-2 mt-md-0">
-        <h1 class="m-0 fw-bold fs-3">Registro de cuenta</h1>
+        <h1 class="m-0 fw-bold fs-3">Recuperar Cuenta</h1>
       </div>
 
+        <p class="pt-4 text-center">Complete los siguientes datos para crear una contraseña nueva.</p>
     </div>
   </header>
 
@@ -33,7 +34,7 @@
     <div class="row w-100 justify-content-center">
       <div class="col-12 col-md-6 col-lg-6">
 
-        <form id="formRegister" action="" method="post" class="needs-validation" novalidate>
+        <form id="formRecovery" action="" method="post" class="needs-validation" novalidate>
           <div class="input-group mb-3">
             <span
               class="input-group-text bg-transparent border-end-0 ps-4 curva-top-left text-secondary icono-user"></span>
@@ -55,22 +56,13 @@
               placeholder="Correo electrónico" required />
           </div>
 
-          <div class="input-group mb-3">
-            <span
-              class="input-group-text bg-transparent border-end-0 ps-4 curva-top-left text-secondary icono-password"></span>
-            <input class="form-control p-3 border-start-0 border-end-0 input-password" id="password" type="password" name="password"
-              placeholder="Contraseña" required />
-            <button
-              class="btn border border-start-0 bg-transparent curva-bottom-right text-secondary px-3 input-group-text icono-eye-closed btnTogglePassword"
-              type="button">
-            </button>
-          </div>
+          <div class="input-group mb-3 d-none btnTogglePassword"></div>
 
           <div class="mb-3 mt-4">
             <button class="btn btn-primary w-100 p-3 rounded-5" id="btn-enviar" type="submit" name="register">
               <span class="spinner-border spinner-border-sm d-none me-2" id="btn-spinner" role="status"
                 aria-hidden="true"></span>
-              <span id="btn-texto">Registrarse</span>
+              <span id="btn-texto">Recuperar cuenta</span>
             </button>
           </div>
         </form>

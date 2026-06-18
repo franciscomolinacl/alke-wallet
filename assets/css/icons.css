@@ -1,0 +1,32 @@
+/* Configuración base iconos */
+.icono-email,
+.icono-password,
+.icono-eye,
+.icono-eye-closed,
+.icono-user,
+.icono-fecha {
+  width: 4em;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.1em;
+}
+
+/* Iconos */
+.icono-email {
+  background-image: url("../img/icons/email.svg");
+}
+.icono-password {
+  background-image: url("../img/icons/password.svg");
+}
+.icono-eye {
+  background-image: url("../img/icons/eye.svg");
+}
+.icono-eye-closed {
+  background-image: url("../img/icons/eye-closed.svg");
+}
+.icono-user {
+  background-image: url("../img/icons/user.svg");
+}
+.icono-fecha {
+  background-image: url("../img/icons/fecha.svg");
+}

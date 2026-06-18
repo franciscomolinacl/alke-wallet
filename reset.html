@@ -8,33 +8,37 @@
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
   <link rel="stylesheet" href="./assets/css/style.css" />
   <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
-  <title>Alke Wallet - Inicio de sesión</title>
+  <title>Alke Wallet - Resetear contraseña</title>
 </head>
 
-<body class="d-flex flex-column min-vh-100 bg-body text-body" id="pagLogin">
+<body class="d-flex flex-column min-vh-100 bg-body text-body d-none" id="pagReset">
 
-  <header class="col-6 col-md-3 col-sm-5 mx-auto d-block mt-5 text-center">
-    <a href="./index.html">
-    <img src="./assets/img/logo.webp" class="img-fluid sombra-png" alt="Logo Alke Wallet">
-    </a>
+  <header class="container mb-4">
+    <div class="row align-items-center justify-content-center g-2 g-md-3">
+
+      <div class="col-4 col-sm-3 col-md-1 text-center text-md-end">
+        <a href="./index.html">
+          <img src="./assets/img/logo.webp" class="img-fluid sombra-png mx-auto d-block" alt="Logo Alke Wallet">
+        </a>
+      </div>
+
+      <div class="col-12 col-md-auto text-center text-md-start mt-2 mt-md-0">
+        <h1 class="m-0 fw-bold fs-3">Resetear Contraseña</h1>
+      </div>
+
+      <p class="pt-4 text-center">Ingrese la nueva contraseña en ambos campos.</p>
+    </div>
   </header>
 
   <main class="flex-grow-1 container d-flex align-items-center justify-content-center">
     <div class="row w-100 justify-content-center">
       <div class="col-12 col-md-6 col-lg-6">
 
-        <form id="formLogin" action="" method="post" class="needs-validation" novalidate>
-          <div class="input-group mb-3">
-            <span
-              class="input-group-text bg-transparent border-end-0 ps-4 text-secondary icono-email curva-top-left"></span>
-            <input class="form-control p-3 border-start-0 curva-bottom-right" id="email" type="email" name="email"
-              placeholder="Escriba su Email" required />
-          </div>
-
+        <form id="formReset" action="" method="post" class="needs-validation" novalidate>
           <div class="input-group mb-3">
             <span
               class="input-group-text bg-transparent border-end-0 ps-4 text-secondary icono-password curva-top-left"></span>
-            <input class="form-control p-3 border-start-0 border-end-0 input-password" id="password" type="password" name="password"
+            <input class="form-control p-3 border-start-0 border-end-0 input-password" id="password1" type="password" name="password1"
               placeholder="Escriba su clave" required />
             <button
               class="btn border border-start-0 bg-transparent text-secondary px-3 input-group-text icono-eye-closed curva-bottom-right btnTogglePassword"
@@ -42,25 +46,31 @@
             </button>
           </div>
 
+          <div class="input-group mb-3">
+            <span
+              class="input-group-text bg-transparent border-end-0 ps-4 text-secondary icono-password curva-top-left"></span>
+            <input class="form-control p-3 border-start-0 border-end-0 input-password" id="password2" type="password" name="password2"
+              placeholder="Escriba su clave nuevamente" required />
+            <button
+              class="btn border border-start-0 bg-transparent text-secondary px-3 input-group-text icono-eye-closed curva-bottom-right btnTogglePassword"
+              type="button" id="btnTogglePassword">
+            </button>
+          </div>
+
           <div class="mb-3 mt-4">
-            <button class="btn btn-primary w-100 p-3 rounded-5" id="btn-enviar" type="submit" name="ingresar">
+            <button class="btn btn-primary w-100 p-3 rounded-5" id="btn-enviar" type="submit" name="register">
               <span class="spinner-border spinner-border-sm d-none me-2" id="btn-spinner" role="status"
                 aria-hidden="true"></span>
-              <span id="btn-texto">Iniciar sesión</span>
+              <span id="btn-texto">Resetear contraseña</span>
             </button>
           </div>
         </form>
 
         <div class="row my-3 px-2">
           <div class="col-6 text-start">
-            <a href="./register.html" class="text-decoration-none text-primary fw-medium small">Crear cuenta</a>
-          </div>
-
-          <div class="col-6 text-end">
-            <a href="./recovery.html" class="text-decoration-none text-secondary small">¿Olvidó su clave?</a>
+            <a href="./login.html" class="text-decoration-none text-primary fw-medium small">Volver</a>
           </div>
         </div>
-
 
       </div>
     </div>

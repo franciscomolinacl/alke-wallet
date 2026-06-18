@@ -1,4 +1,10 @@
 // Cambio modo claro/oscuro bootstrap
+$(document).on("change", "#btnDarkLight", function () {
+    const nuevoTema = this.checked ? "light" : "dark";
+    $("html").attr("data-bs-theme", nuevoTema);
+    localStorage.setItem("modoDarkLight", nuevoTema);
+});
+
 export function modoDarkLight() {
     const html = document.documentElement;
     const checkbox = document.getElementById("btnDarkLight");
@@ -7,23 +13,10 @@ export function modoDarkLight() {
 
     html.setAttribute("data-bs-theme", elModo);
     checkbox && (checkbox.checked = (elModo === "light"));
-
-    document.getElementById("btnDarkLight").addEventListener("click", () => {
-        const currentTheme = html.getAttribute("data-bs-theme");
-
-        if (currentTheme === "dark") {
-            html.setAttribute("data-bs-theme", "light");
-            localStorage.setItem("modoDarkLight", "light");
-        } else {
-            html.setAttribute("data-bs-theme", "dark");
-            localStorage.setItem("modoDarkLight", "dark");
-        }
-    });
 }
 
 // Validadción campos vacios en formularios
 export function activarValidacion() {
-    "use strict";
     const forms = document.querySelectorAll(".needs-validation");
 
     Array.from(forms).forEach((form) => {
@@ -50,9 +43,11 @@ export function activarValidacion() {
                             $("#email").addClass("is-invalid");
                             errorDiv.innerText = "Por favor, escribe un correo electrónico válido.";
                         } else if (input.type === "password") {
-                            $("#password").addClass("is-invalid");
+                            $(".input-password").removeClass("is-valid");
+                            $(".input-password").addClass("is-invalid");
                             errorDiv.innerText = "La contraseña no puede quedar vacía.";
                         } else {
+                            input.classList.remove("is-valid");
                             input.classList.add("is-invalid");
                             errorDiv.innerText = "Este campo es obligatorio.";
                         }
@@ -72,6 +67,7 @@ export function activarValidacion() {
     });
 }
 
+const salt = "AlK3-W4ll3t_T4l3nt0-D1git4L_2026";
 // Redirección
 export function redireccion(enlace, seg) {
     setTimeout(function () {
@@ -81,19 +77,13 @@ export function redireccion(enlace, seg) {
 
 // Mostrar / ocultar contraseña
 export function mostrarOcultarPass() {
-    const btnToggle = document.getElementById("btnTogglePassword");
-    const passwordInput = document.getElementById("password");
-
-    if (btnToggle) {
-        btnToggle.addEventListener("click", () => {
-            const tipo = passwordInput.type === "password" ? "text" : "password";
-            passwordInput.type = tipo;
-
-            btnToggle.classList.toggle("icono-eye");
-            btnToggle.classList.toggle("icono-eye-closed");
-        });
-    }
-
+    $(".btnTogglePassword").on("click", function () {
+        const $contenedor = $(this).closest(".input-group");
+        const $pass = $contenedor.find(".input-password");
+        const tipo = $pass.prop("type") === "password" ? "text" : "password";
+        $pass.prop("type", tipo);
+        $(this).toggleClass("icono-eye icono-eye-closed");
+    });
 }
 
 // Crea automaticamente primer usuario
@@ -103,7 +93,7 @@ export function primerUsuario() {
         listaUsuarios = [];
         const primerUsuario = {
             email: "fran@correo.com",
-            password: "laclave1234",
+            password: hashPassword("laclave1234", 1),
             nombre: "Francisco",
             nacimiento: "01-01-1980",
         };
@@ -111,4 +101,15 @@ export function primerUsuario() {
         listaUsuarios.push(primerUsuario);
         localStorage.setItem("usuarios", JSON.stringify(listaUsuarios));
     }
+}
+
+// Encriptar/Desencriptar contraseña
+export function hashPassword(password, modo) {
+    if (modo == 1) {
+        let textoLargo = password + "||" + salt;
+        return btoa(textoLargo);
+    } else if (modo == 2) {
+        let textoLargo = atob(password);
+        return textoLargo.split("||")[0];
+    } 
 }
