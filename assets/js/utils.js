@@ -67,6 +67,264 @@ export function activarValidacion() {
     });
 }
 
+export function loginPag() {
+    let loginExitoso = false;
+
+    if ($("#formLogin").length) {
+        $("#formLogin").submit(function (evento) {
+            evento.preventDefault();
+
+            const email = $("#email").val().trim();
+            const password = $("#password").val().trim();
+            const usuarios = localStorage.getItem("usuarios");
+            const listaUsuarios = JSON.parse(usuarios) || [];
+
+            $(this).find(".invalid-feedback").remove();
+            $("#email, #password").removeClass("is-invalid");
+
+            if (email && password) {
+                const usuarioEncontrado = listaUsuarios.find(user =>
+                    user.email === email && hashPassword(user.password, 2) === password
+                );
+
+                if (usuarioEncontrado) {
+                    loginExitoso = true;
+                    localStorage.setItem("login", "true");
+                    localStorage.setItem("usuario_logueado", usuarioEncontrado.email);
+                    $("#email, #password").removeClass("is-invalid");
+                    $("#email, #password").addClass("is-valid");
+                    $("<div>", {
+                        id: "credenciales-exito",
+                        class: "valid-feedback text-center",
+                        text: "¡Credenciales correctas! Iniciando sesión...",
+                    }).insertAfter(".btnTogglePassword");
+                    $("#credenciales-exito").show();
+                    $("#btn-spinner").removeClass("d-none");
+                    $("#btn-texto").text("Cargando...");
+                    $("#btn-enviar").prop("disabled", true);
+                    redireccion("./menu.html", 2);
+                } else {
+                    $("#email, #password").removeClass("is-valid");
+                    $("#email, #password").addClass("is-invalid");
+                    if (!$("#credenciales-error").length) {
+                        $("<div>", {
+                            id: "credenciales-error",
+                            class: "invalid-feedback text-center",
+                            text: "Error de credenciales.",
+                        }).insertAfter(".btnTogglePassword");
+                    }
+                }
+            }
+        });
+    }
+}
+
+export function registerPag() {
+    if ($("#formRegister").length) {
+        $("#formRegister").submit(function (evento) {
+            evento.preventDefault();
+
+            const email = $("#email").val().trim();
+            const password = $("#password").val().trim();
+            const nombre = $("#nombre").val().trim();
+            const nacimiento = $("#nacimiento").val();
+
+            $(this).find(".invalid-feedback").remove();
+            $("#email, #password, #nombre, #nacimiento").removeClass("is-invalid");
+
+            if (email && password && nombre && nacimiento) {
+                const usuarios = localStorage.getItem("usuarios");
+                const listaUsuarios = JSON.parse(usuarios) || [];
+                const usuarioEncontrado = listaUsuarios.find(user => user.email === email);
+                if (usuarioEncontrado) {
+                    $("#email, #password, #nombre, #nacimiento").removeClass("is-valid");
+                    $("#email, #password, #nombre, #nacimiento").addClass("is-invalid");
+                    if (!$("#usuario-existe").length) {
+                        $("<div>", {
+                            id: "usuario-existe",
+                            class: "invalid-feedback text-center pt-3",
+                            text: "El E-Mail ya esta registrado.",
+                        }).insertAfter(".btnTogglePassword");
+                    }
+                } else {
+                    const userNuevo = {
+                        email: email,
+                        password: hashPassword(password, 1),
+                        nombre: nombre,
+                        nacimiento: nacimiento,
+                    };
+
+                    listaUsuarios.push(userNuevo);
+                    localStorage.setItem("usuarios", JSON.stringify(listaUsuarios));
+
+                    $("#email, #password, #nombre, #nacimiento").removeClass("is-invalid");
+                    $("#email, #password, #nombre, #nacimiento").addClass("is-valid");
+                    $("<div>", {
+                        id: "registro-exito",
+                        class: "valid-feedback text-center",
+                        text: "¡Cuenta creada correctamente!",
+                    }).insertAfter(".btnTogglePassword");
+                    $("#registro-exito").show();
+                    $("#btn-spinner").removeClass("d-none");
+                    $("#btn-texto").text("Cargando...");
+                    $("#btn-enviar").prop("disabled", true);
+                    redireccion("./login.html", 2);
+
+                }
+            }
+        });
+    }
+}
+
+export function recoveryPag() {
+    if ($("#formRecovery").length) {
+        $("#formRecovery").submit(function (evento) {
+            evento.preventDefault();
+
+            const email = $("#email").val().trim();
+            const nombre = $("#nombre").val().trim();
+            const nacimiento = $("#nacimiento").val();
+
+            $(this).find(".invalid-feedback").remove();
+            $("#email, #nombre, #nacimiento").removeClass("is-invalid");
+
+            if (email && nombre && nacimiento) {
+                const usuarios = localStorage.getItem("usuarios");
+                const listaUsuarios = JSON.parse(usuarios) || [];
+                const usuarioEncontrado = listaUsuarios.find(user => user.email === email && user.nombre === nombre && user.nacimiento === nacimiento);
+                if (usuarioEncontrado) {
+                    $("#email, #nombre, #nacimiento, .btnTogglePassword").removeClass("is-invalid");
+                    $("#email, #nombre, #nacimiento, .btnTogglePassword").addClass("is-valid");
+                    if (!$("#usuario-existe").length) {
+                        $("<div>", {
+                            id: "usuario-existe",
+                            class: "valid-feedback text-center pt-3",
+                            text: "Datos correctos, será redirigido a resetear la contraseña.",
+                        }).insertAfter(".btnTogglePassword");
+                    }
+                    localStorage.setItem("permiso_reset", email);
+                    redireccion("reset.html", 2);
+                } else {
+                    $("#email, #nombre, #nacimiento, .btnTogglePassword").removeClass("is-valid");
+                    $("#email, #nombre, #nacimiento, .btnTogglePassword").addClass("is-invalid");
+                    $("<div>", {
+                        id: "registro-error",
+                        class: "invalid-feedback text-center",
+                        text: "La información ingresada no coincide con nuestros registros.",
+                    }).insertAfter(".btnTogglePassword");
+
+                }
+            }
+        });
+    }
+}
+
+export function resetPag() {
+    const permiso = localStorage.getItem("permiso_reset");
+
+    if (permiso === null) {
+        redireccion("login.html", 0);
+        return;
+    }
+
+    $("#pagReset").removeClass("d-none");
+
+    if ($("#formReset").length) {
+        $("#formReset").submit(function (evento) {
+            evento.preventDefault();
+
+            const pass1 = $("#password1").val().trim();
+            const pass2 = $("#password2").val().trim();
+
+            $(this).find(".invalid-feedback").remove();
+            $(".input-password").removeClass("is-invalid");
+
+            if (!pass1 || !pass2) {
+                $(".input-password").addClass("is-invalid");
+                return;
+            }
+
+            if (pass1 !== pass2) {
+                $(".input-password").addClass("is-invalid");
+                $("<div>", {
+                    class: "invalid-feedback",
+                    text: "Las contraseñas no coinciden. Por favor, verifíquelas.",
+                }).insertAfter(".btnTogglePassword");
+                return;
+            }
+
+            const email = localStorage.getItem("permiso_reset");
+            const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+            const usuarioIndex = listaUsuarios.findIndex(user => user.email === email);
+
+            if (usuarioIndex !== -1) {
+                const nuevaClave = hashPassword(pass1, 1);
+                listaUsuarios[usuarioIndex].password = nuevaClave;
+                localStorage.setItem("usuarios", JSON.stringify(listaUsuarios));
+
+                $(".input-password").addClass("is-valid");
+                $("<div>", {
+                    id: "pass-reseteada",
+                    class: "valid-feedback text-center pt-3",
+                    text: "Contraseña reseteada con exito! Será redirigido al login.",
+                }).insertAfter("#btnTogglePassword");
+                localStorage.removeItem("permiso_reset");
+                redireccion("login.html", 3);
+            } else {
+                alert("Hubo un error con el usuario. Inténtalo de nuevo.");
+                redireccion("login.html", 0);
+            }
+        });
+    }
+}
+
+export function depositoPag() {
+    const inputDeposito = $("#deposito");
+    if ($("#formDeposit").length) {
+
+        $("#formDeposit").submit(function (evento) {
+            evento.preventDefault(); // Evita que la página se recargue
+            const valorInput = inputDeposito.val().trim();
+
+            if (valorInput) {
+                const montoADepositar = Number(valorInput); 
+                let saldoGuardado = Number(localStorage.getItem("saldoUsuario")); 
+                let nuevoSaldo = saldoGuardado + montoADepositar; 
+                localStorage.setItem("saldoUsuario", nuevoSaldo); 
+                const fechaYHora = new Date().toLocaleString("es-CL");
+                guardarTransaccion("Deposito", montoADepositar, "deposito", fechaYHora); 
+                const montoFormateado = montoADepositar.toLocaleString("es-CL", {
+                    style: "currency",
+                    currency: "CLP",
+                    minimumFractionDigits: 0,
+                });
+
+                $("#alert-container")
+                    .html(
+                        `<div class="alert alert-success">¡Depósito exitoso! Se han abonado <strong>${montoFormateado}</strong> a tu cuenta.</div>`,
+                    )
+                    .show().delay(3000)
+                    .fadeOut(800, function () {
+                        $("#deposito").focus();
+                    });
+
+                saldoCaja();
+                $("#deposito").val("");
+            } else {
+                $("#alert-container")
+                    .html(
+                        `<div class="alert alert-warning">¡Advertencia! Debe ingresar monto antes de enviar.</div>`,
+                    )
+                    .show()
+                    .delay(3000)
+                    .fadeOut(800, function () {
+                        $("#deposito").focus();
+                    });
+            }
+        });
+    }
+}
+
 const salt = "AlK3-W4ll3t_T4l3nt0-D1git4L_2026";
 // Redirección
 export function redireccion(enlace, seg) {
@@ -136,5 +394,75 @@ export function cargarDatosUsuario() {
     } else {
         localStorage.removeItem("usuario_logueado");
         redireccion("login.html", 1);
+    }
+}
+
+// Obtengo el saldo en caja
+export function saldoCaja() {
+    const cajaSaldo = document.getElementsByClassName("saldo-usuario");
+    if (cajaSaldo) {
+        const saldoInicial = 0;
+        let saldoActual = localStorage.getItem("saldoUsuario");
+
+        if (saldoActual === null) {
+            localStorage.setItem("saldoUsuario", saldoInicial);
+            saldoActual = saldoInicial;
+            const fechaYHora = new Date().toLocaleString("es-CL");
+            guardarTransaccion("Saldo inicial", saldoActual, "deposito", fechaYHora);
+        }
+        saldoActual = Number(saldoActual).toLocaleString("es-CL");
+        $(".saldo-usuario").text(`$${saldoActual}`);
+    }
+}
+
+// Guardar transaccion
+function guardarTransaccion(contacto, monto, tipo, fechayhora) {
+    let listaTransacciones = localStorage.getItem("transacciones");
+    if (listaTransacciones === null) {
+        listaTransacciones = [];
+    } else {
+        listaTransacciones = JSON.parse(listaTransacciones);
+    }
+
+    const nuevaTransferencia = {
+        contacto: contacto,
+        monto: monto,
+        tipo: tipo,
+        fechayhora,
+    };
+
+    listaTransacciones.push(nuevaTransferencia);
+    localStorage.setItem("transacciones", JSON.stringify(listaTransacciones));
+}
+
+// Reviso login activo
+export function loginActivo(pag) {
+    let loginGuardado = localStorage.getItem("login");
+    const paginasPublicas = ["pagIndex", "pagLogin", "pagRegister", "pagRecovery", "pagReset"];
+
+    if (loginGuardado !== "true") {
+        if (paginasPublicas.includes(pag)) {
+            return;
+        }
+        redireccion("./login.html", 0);
+    } else {
+        if (paginasPublicas.includes(pag)) {
+            redireccion("./menu.html", 0);
+        }
+        $(`#${pag}`).removeClass("d-none");
+    }
+}
+
+// Funcion para salir del login
+export function salir() {
+    const btnSalir = document.getElementById("btnSalir");
+    const miModal = new bootstrap.Modal($("#salida")[0]);
+    if (btnSalir) {
+        btnSalir.addEventListener("click", function (evento) {
+            evento.preventDefault();
+            localStorage.removeItem("login");
+            miModal.show();
+            redireccion("./login.html", 2);
+        });
     }
 }
