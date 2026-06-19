@@ -1,18 +1,15 @@
 // Cambio modo claro/oscuro bootstrap
-$(document).on("change", "#btnDarkLight", function () {
+$(document).on("change", "#btnDarkLight, #btnDarkLightSidebar", function () {
     const nuevoTema = this.checked ? "light" : "dark";
     $("html").attr("data-bs-theme", nuevoTema);
     localStorage.setItem("modoDarkLight", nuevoTema);
+    $("#btnDarkLight, #btnDarkLightSidebar").prop("checked", this.checked);
 });
 
 export function modoDarkLight() {
-    const html = document.documentElement;
-    const checkbox = document.getElementById("btnDarkLight");
-    let modoDarkLight = localStorage.getItem("modoDarkLight");
-    let elModo = (modoDarkLight === "light") ? "light" : "dark";
-
-    html.setAttribute("data-bs-theme", elModo);
-    checkbox && (checkbox.checked = (elModo === "light"));
+    let modoDarkLight = localStorage.getItem("modoDarkLight") || "dark";
+    $("html").attr("data-bs-theme", modoDarkLight);
+    $("#btnDarkLight, #btnDarkLightSidebar").prop("checked", modoDarkLight === "light");
 }
 
 // Validadción campos vacios en formularios
@@ -35,7 +32,6 @@ const activarValidacion = function () {
                     const errorDiv = document.createElement("div");
                     errorDiv.className = "invalid-feedback d-block mb-3 text-center";
 
-                    // Asigno textos segun el tipo de campo
                     if (input.type === "email") {
                         $("#email").removeClass("is-valid");
                         $("#email").addClass("is-invalid");
@@ -61,11 +57,10 @@ const activarValidacion = function () {
             });
         }
 
-
-
     });
 }
 
+// Pagina Login
 export function loginPag() {
     activarValidacion();
     if ($("#formLogin").length) {
@@ -81,13 +76,24 @@ export function loginPag() {
             $("#email, #password").removeClass("is-invalid");
 
             if (email && password) {
-                const usuarioEncontrado = listaUsuarios.find(user =>
-                    user.email === email && hashPassword(user.password, 2) === password
-                );
+                const usuarioExiste = listaUsuarios.find(user => user.email === email);
+                if (!usuarioExiste) {
+                    $("#email").removeClass("is-valid").addClass("is-invalid");
+                    if (!$("#credenciales-error").length) {
+                        $("<div>", {
+                            id: "credenciales-error",
+                            class: "invalid-feedback text-center d-block",
+                            text: "El correo electrónico ingresado no está registrado.",
+                        }).insertAfter(".btnTogglePassword");
+                    }
+                    return;
+                }
 
-                if (usuarioEncontrado) {
+                const passwordCorrecto = (hashPassword(usuarioExiste.password, 2) === password);
+
+                if (passwordCorrecto) {
                     localStorage.setItem("login", "true");
-                    localStorage.setItem("usuario_logueado", usuarioEncontrado.email);
+                    localStorage.setItem("usuario_logueado", usuarioExiste.email);
                     $("#email, #password").removeClass("is-invalid");
                     $("#email, #password").addClass("is-valid");
                     $("<div>", {
@@ -116,6 +122,7 @@ export function loginPag() {
     }
 }
 
+// Pagina Registro
 export function registerPag() {
     activarValidacion();
     if ($("#formRegister").length) {
@@ -150,6 +157,7 @@ export function registerPag() {
                         password: hashPassword(password, 1),
                         nombre: nombre,
                         nacimiento: nacimiento,
+                        saldo: 0,
                     };
 
                     listaUsuarios.push(userNuevo);
@@ -174,6 +182,7 @@ export function registerPag() {
     }
 }
 
+// Pagina Recuperar Contraseña
 export function recoveryPag() {
     activarValidacion();
     if ($("#formRecovery").length) {
@@ -218,6 +227,7 @@ export function recoveryPag() {
     }
 }
 
+// Pagina resetear contraseña
 export function resetPag() {
     activarValidacion();
     const permiso = localStorage.getItem("permiso_reset");
@@ -278,6 +288,7 @@ export function resetPag() {
     }
 }
 
+// Pagina Depositar
 export function depositoPag() {
     const inputDeposito = $("#deposito");
     if ($("#formDeposit").length) {
@@ -288,36 +299,48 @@ export function depositoPag() {
 
             if (valorInput) {
                 const montoADepositar = Number(valorInput);
-                let saldoGuardado = Number(localStorage.getItem("saldoUsuario"));
-                let nuevoSaldo = saldoGuardado + montoADepositar;
-                localStorage.setItem("saldoUsuario", nuevoSaldo);
-                const fechaYHora = new Date().toLocaleString("es-CL");
-                guardarTransaccion("Deposito", montoADepositar, "deposito", fechaYHora);
-                const montoFormateado = montoADepositar.toLocaleString("es-CL", {
-                    style: "currency",
-                    currency: "CLP",
-                    minimumFractionDigits: 0,
-                });
+                const emailLogueado = localStorage.getItem("usuario_logueado");
+                const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+                const usuarioIndex = listaUsuarios.findIndex(user => user.email === emailLogueado);
 
-                $("#alert-container")
-                    .html(
-                        `<div class="alert alert-success">¡Depósito exitoso! Se han abonado <strong>${montoFormateado}</strong> a tu cuenta.</div>`,
-                    )
-                    .show().delay(3000)
-                    .fadeOut(800, function () {
-                        $("#deposito").focus();
+                if (usuarioIndex !== -1) {
+                    let saldoGuardado = Number(listaUsuarios[usuarioIndex].saldo) || 0;
+                    let nuevoSaldo = saldoGuardado + montoADepositar;
+
+                    listaUsuarios[usuarioIndex].saldo = nuevoSaldo;
+                    localStorage.setItem("usuarios", JSON.stringify(listaUsuarios));
+
+                    const fechaYHora = new Date().toLocaleString("es-CL");
+                    guardarTransaccion("Deposito", montoADepositar, "deposito", fechaYHora);
+
+                    const montoFormateado = montoADepositar.toLocaleString("es-CL", {
+                        style: "currency",
+                        currency: "CLP",
+                        minimumFractionDigits: 0,
                     });
 
-                saldoCaja();
-                $("#deposito").val("");
+                    $("#alert-container")
+                        .html(
+                            `<div class="alert alert-success">¡Depósito exitoso!<br> Se han abonado <strong>${montoFormateado}</strong> a tu cuenta.</div>`,
+                        )
+                        .show().delay(3000)
+                        .fadeOut(800, function () {
+                            $("#deposito").focus();
+                        });
+
+                    saldoCaja();
+                    $("#deposito").val("");
+                }
+
             } else {
                 $("#alert-container")
                     .html(
-                        `<div class="alert alert-warning">¡Advertencia! Debe ingresar monto antes de enviar.</div>`,
+                        `<div class="alert alert-warning">¡Advertencia! <br>Debe ingresar monto (en números) antes de enviar.</div>`,
                     )
                     .show()
                     .delay(3000)
                     .fadeOut(800, function () {
+                        $("#deposito").val("");
                         $("#deposito").focus();
                     });
             }
@@ -325,6 +348,7 @@ export function depositoPag() {
     }
 }
 
+// Pagina Transferir
 export function transferirPag() {
     activarValidacion();
     agregarContacto();
@@ -342,54 +366,52 @@ export function transferirPag() {
                 sendmoneyTransferencia && contactoSeleccionado.length
             ) {
                 const idTransferencia = contactoSeleccionado.attr("id");
-                const contactoTransferencia = $(
-                    `label[for="${idTransferencia}"]`,
-                ).text();
+                const contactoTransferencia = $(`label[for="${idTransferencia}"]`).text();
                 const montoATransferir = Number(sendmoneyTransferencia);
-                let saldoGuardado = Number(localStorage.getItem("saldoUsuario"));
+                const emailLogueado = localStorage.getItem("usuario_logueado");
+                const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+                const usuarioIndex = listaUsuarios.findIndex(user => user.email === emailLogueado);
 
-                if (saldoGuardado < montoATransferir) {
-                    let respuesta = `El monto a transferir debe ser inferior al saldo de $${saldoGuardado.toLocaleString("es-CL")}`;
-                    $("#alert-container2")
-                        .html(
-                            `<div class="alert alert-warning">¡Advertencia! ${respuesta}</div>`,
-                        )
-                        .show()
-                        .delay(4000)
-                        .fadeOut(800, function () {
-                            $("#sendmoney").focus();
-                        });
-                    $("#sendmoney").removeClass("is-invalid");
-                    return;
+                if (usuarioIndex !== -1) {
+                    let saldoGuardado = Number(listaUsuarios[usuarioIndex].saldo) || 0;
+
+                    if (saldoGuardado < montoATransferir) {
+                        let respuesta = `El monto a transferir debe ser inferior al saldo de $${saldoGuardado.toLocaleString("es-CL")}`;
+                        $("#alert-container2")
+                            .html(
+                                `<div class="alert alert-warning">¡Advertencia!<br> ${respuesta}</div>`,
+                            )
+                            .show()
+                            .delay(4000)
+                            .fadeOut(800, function () {
+                                $("#sendmoney").focus();
+                            });
+                        $("#sendmoney").removeClass("is-invalid");
+                        return;
+                    }
+
+                    let nuevoSaldo = saldoGuardado - montoATransferir;
+
+                    listaUsuarios[usuarioIndex].saldo = nuevoSaldo;
+                    localStorage.setItem("usuarios", JSON.stringify(listaUsuarios));
+
+                    const fechaYHora = new Date().toLocaleString("es-CL");
+                    guardarTransaccion(
+                        contactoTransferencia,
+                        montoATransferir,
+                        "transferencia",
+                        fechaYHora,
+                    );
+
+                    const numeroCuenta = $("input[name='contacto']:checked").val();
+                    confirmarTransferencia(sendmoneyTransferencia, contactoTransferencia, numeroCuenta);
+
+                    saldoCaja();
                 }
-
-                let nuevoSaldo = saldoGuardado - montoATransferir;
-                localStorage.setItem("saldoUsuario", nuevoSaldo);
-
-                const fechaYHora = new Date().toLocaleString("es-CL");
-                guardarTransaccion(
-                    contactoTransferencia,
-                    montoATransferir,
-                    "transferencia",
-                    fechaYHora,
-                );
-
-                $("#alert-container2")
-                    .html(
-                        `<div class="alert alert-success">¡Éxito! La transferencia se efectuó exitosamente.</div>`,
-                    )
-                    .show()
-                    .delay(4000)
-                    .fadeOut(800, function () {
-                        $("#sendmoney").val("");
-                        $("#sendmoney").focus();
-                    });
-                saldoCaja();
-            }
-            else {
+            } else {
                 let respuesta2 = "";
                 if (!sendmoneyTransferencia) {
-                    respuesta2 = "El monto no puede estar vacío.";
+                    respuesta2 = "El monto no puede estar vacío y deben ser números.";
                 } else
                     if (!contactoSeleccionado.length) {
                         respuesta2 = "Debe seleccionar un contacto para transferir.";
@@ -397,7 +419,7 @@ export function transferirPag() {
 
                 $("#alert-container2")
                     .html(
-                        `<div class="alert alert-warning">¡Advertencia! ${respuesta2}</div>`,
+                        `<div class="alert alert-warning">¡Advertencia!<br> ${respuesta2}</div>`,
                     )
                     .show()
                     .delay(3500)
@@ -405,6 +427,7 @@ export function transferirPag() {
                         if (!sendmoneyTransferencia) {
                             $("#sendmoney").removeClass("is-invalid");
                             $(".invalid-feedback").remove();
+                            $("#sendmoney").val("");
                             $("#sendmoney").focus();
                         }
                     });
@@ -448,7 +471,14 @@ function agregarContacto() {
                 tipocuentaContacto &&
                 cuentaContacto
             ) {
-                let listaContactos = localStorage.getItem("misContactos");
+                // ==========================================================================
+                // 🚀 ¡NUEVA LÓGICA! Creamos una agenda única para el usuario logueado
+                // ==========================================================================
+                const emailLogueado = localStorage.getItem("usuario_logueado") || "anonimo";
+                const claveContactosUnica = `contactos_${emailLogueado}`;
+
+                // Leemos los contactos usando la nueva clave del correo actual
+                let listaContactos = localStorage.getItem(claveContactosUnica);
                 if (listaContactos === null) {
                     listaContactos = [];
                 } else {
@@ -466,14 +496,16 @@ function agregarContacto() {
                 };
 
                 listaContactos.push(nuevoContacto);
-                localStorage.setItem("misContactos", JSON.stringify(listaContactos));
-                $("#formContactos")[0].reset();
-                $("#formContactos").find(".form-control, .form-select").removeClass("is-invalid is-valid");
-                $("#formContactos").find(".invalid-feedback").remove();
 
+                // Guardamos los datos de vuelta en su casilla única de memoria
+                localStorage.setItem(claveContactosUnica, JSON.stringify(listaContactos));
+
+                // ==========================================================================
+                // MANTENEMOS TODO TU FLUJO Y ALERTAS ORIGINALES INTACTAS
+                // ==========================================================================
                 $("#alert-container")
                     .html(
-                        `<div class="alert alert-success">¡Éxito! Contacto agregado correctamente.</div>`,
+                        `<div class="alert alert-success">¡Éxito!<br> Contacto agregado correctamente.</div>`,
                     )
                     .show()
                     .delay(3000)
@@ -481,10 +513,12 @@ function agregarContacto() {
                 $("#contenedor-formulario").slideUp(400);
 
                 mostrarContactosEnCheck();
+                $("#formContactos")[0].reset();
             } else {
+
                 $("#alert-container")
                     .html(
-                        `<div class="alert alert-warning">¡Advertencia! Debe completar los campos obligatorios.</div>`,
+                        `<div class="alert alert-warning">¡Advertencia!<br> Debe completar los campos obligatorios.</div>`,
                     )
                     .show()
                     .delay(3000)
@@ -515,7 +549,10 @@ function mostrarContactosEnCheck(textoBuscar = "") {
     const contenedor = document.getElementById("contenedor-contactos");
     if (!contenedor) return;
 
-    const datosStorage = localStorage.getItem("misContactos");
+    const emailLogueado = localStorage.getItem("usuario_logueado") || "anonimo";
+    const claveContactosUnica = `contactos_${emailLogueado}`;
+
+    const datosStorage = localStorage.getItem(claveContactosUnica);
 
     if (!datosStorage) {
         contenedor.innerHTML =
@@ -554,7 +591,6 @@ function mostrarContactosEnCheck(textoBuscar = "") {
             ? `${contacto.nombre} (${contacto.alias})`
             : contacto.nombre;
 
-        // Estructura nueva usando d-flex para separar el nombre del botón de eliminar
         const estructuraContacto = `
             <div class="d-flex align-items-center mb-2 w-100 gap-2">
                 <!-- El radio original oculto de Bootstrap -->
@@ -574,11 +610,12 @@ function mostrarContactosEnCheck(textoBuscar = "") {
 
         $contenedor.append(estructuraContacto);
     });
+    // Boton eliminar
     $contenedor.off("click", ".btn-eliminar-contacto").on("click", ".btn-eliminar-contacto", function (e) {
         e.preventDefault();
 
         const indiceABorrar = $(this).data("indice");
-        let listaOriginal = JSON.parse(localStorage.getItem("misContactos")) || [];
+        let listaOriginal = JSON.parse(localStorage.getItem(claveContactosUnica)) || [];
 
         if (textoBuscar.trim() !== "") {
             const cuentaBuscada = lista[indiceABorrar].cuenta;
@@ -587,12 +624,7 @@ function mostrarContactosEnCheck(textoBuscar = "") {
             listaOriginal.splice(indiceABorrar, 1);
         }
 
-        if (listaOriginal.length === 0) {
-            localStorage.removeItem("misContactos");
-        } else {
-            localStorage.setItem("misContactos", JSON.stringify(listaOriginal));
-        }
-
+        localStorage.setItem(claveContactosUnica, JSON.stringify(listaOriginal));
         mostrarContactosEnCheck(textoBuscar);
     });
 
@@ -606,6 +638,7 @@ function mostrarContactosEnCheck(textoBuscar = "") {
     });
 }
 
+// Pagina de historial / transacciones
 export function historialPag() {
     leerTransacciones();
     calcularEstadisticas();
@@ -621,11 +654,16 @@ export function historialPag() {
     });
 }
 
+// Leer transacciones / historial de transferencias
 function leerTransacciones() {
     const contenedor = $("#contenedor-transacciones");
     if (!contenedor.length) return;
 
-    const datosStorage = localStorage.getItem("transacciones");
+    const emailLogueado = localStorage.getItem("usuario_logueado");
+    if (!emailLogueado) return;
+
+    const historialUnico = `transacciones_${emailLogueado}`;
+    const datosStorage = localStorage.getItem(historialUnico);
 
     if (!datosStorage) {
         contenedor.html(`
@@ -683,6 +721,7 @@ function leerTransacciones() {
 
 
 const salt = "AlK3-W4ll3t_T4l3nt0-D1git4L_2026";
+
 // Redirección
 export function redireccion(enlace, seg) {
     setTimeout(function () {
@@ -748,6 +787,11 @@ export function cargarDatosUsuario() {
         $(".nombre-usuario").text(nombreCompleto);
         $(".avatar-inicial").text(primeraLetra);
 
+        $("#perfil-nombre-grande").text(usuarioActual.nombre);
+        $("#perfil-nombre").text(usuarioActual.nombre);
+        $("#perfil-correo").text(usuarioActual.email);
+        $("#perfil-nacimiento").text(usuarioActual.nacimiento);
+
     } else {
         localStorage.removeItem("usuario_logueado");
         redireccion("login.html", 1);
@@ -756,40 +800,44 @@ export function cargarDatosUsuario() {
 
 // Obtengo el saldo en caja
 export function saldoCaja() {
-    const cajaSaldo = document.getElementsByClassName("saldo-usuario");
-    if (cajaSaldo) {
-        const saldoInicial = 0;
-        let saldoActual = localStorage.getItem("saldoUsuario");
+    const $cajaSaldo = $(".saldo-usuario");
+    if (!$cajaSaldo.length) return;
 
-        if (saldoActual === null) {
-            localStorage.setItem("saldoUsuario", saldoInicial);
+    const emailLogueado = localStorage.getItem("usuario_logueado");
+    if (!emailLogueado) return;
+
+    const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const usuarioIndex = listaUsuarios.findIndex(user => user.email === emailLogueado);
+
+    if (usuarioIndex !== -1) {
+        let usuario = listaUsuarios[usuarioIndex];
+        let saldoActual = usuario.saldo;
+
+        if (saldoActual === undefined || saldoActual === null) {
+            const saldoInicial = 0;
+
+            listaUsuarios[usuarioIndex].saldo = saldoInicial;
+            localStorage.setItem("usuarios", JSON.stringify(listaUsuarios));
+
             saldoActual = saldoInicial;
-            const fechaYHora = new Date().toLocaleString("es-CL");
-            guardarTransaccion("Saldo inicial", saldoActual, "deposito", fechaYHora);
         }
-        saldoActual = Number(saldoActual).toLocaleString("es-CL");
-        $(".saldo-usuario").text(`$${saldoActual}`);
+
+        const saldoFormateado = Number(saldoActual).toLocaleString("es-CL");
+        $cajaSaldo.text(`$${saldoFormateado}`);
     }
 }
 
 // Guardar transaccion
 function guardarTransaccion(contacto, monto, tipo, fechayhora) {
-    let listaTransacciones = localStorage.getItem("transacciones");
-    if (listaTransacciones === null) {
-        listaTransacciones = [];
-    } else {
-        listaTransacciones = JSON.parse(listaTransacciones);
-    }
+    const emailLogueado = localStorage.getItem("usuario_logueado");
+    if (!emailLogueado) return;
 
-    const nuevaTransferencia = {
-        contacto: contacto,
-        monto: monto,
-        tipo: tipo,
-        fechayhora,
-    };
+    const historialUnico = `transacciones_${emailLogueado}`;
+    const nuevaTx = { contacto, monto, tipo, fechayhora };
+    const historial = JSON.parse(localStorage.getItem(historialUnico)) || [];
 
-    listaTransacciones.push(nuevaTransferencia);
-    localStorage.setItem("transacciones", JSON.stringify(listaTransacciones));
+    historial.push(nuevaTx);
+    localStorage.setItem(historialUnico, JSON.stringify(historial));
 }
 
 // Reviso login activo
@@ -812,21 +860,30 @@ export function loginActivo(pag) {
 
 // Funcion para salir del login
 export function salir() {
-    const btnSalir = document.getElementById("btnSalir");
-    const miModal = new bootstrap.Modal($("#salida")[0]);
-    if (btnSalir) {
-        btnSalir.addEventListener("click", function (evento) {
-            evento.preventDefault();
-            localStorage.removeItem("login");
+    $(document).off("click", "#btnSalir, #btnSalirSidebar").on("click", "#btnSalir, #btnSalirSidebar", function (evento) {
+        evento.preventDefault();
+
+        localStorage.removeItem("usuario_logueado");
+        localStorage.removeItem("login");
+
+        const $modal = $("#salida");
+        if ($modal.length) {
+            const miModal = new bootstrap.Modal($modal[0]);
             miModal.show();
-            redireccion("./login.html", 2);
-        });
-    }
+        }
+
+        redireccion("./login.html", 2);
+    });
 }
+
 
 // Calculo de estadisticas para pagina transacciones
 export function calcularEstadisticas() {
-    const datosStorage = localStorage.getItem("transacciones");
+    const emailLogueado = localStorage.getItem("usuario_logueado");
+    if (!emailLogueado) return;
+
+    const historialUnico = `transacciones_${emailLogueado}`;
+    const datosStorage = localStorage.getItem(historialUnico);
     if (!datosStorage) return;
 
     const lista = JSON.parse(datosStorage);
@@ -857,3 +914,31 @@ export function calcularEstadisticas() {
         $balanceElemento.removeClass("text-primary").addClass("text-danger");
     }
 }
+
+// Comprobante de Transferencia
+function confirmarTransferencia(monto, contactoTransferencia, numeroCuenta) {
+    const numeroReferencia = Math.floor(1000000000 + Math.random() * 9000000000);
+
+    const ahora = new Date();
+    const fechaFormateada = ahora.toLocaleString("es-CL");
+
+    $("#recibo-monto").text(`$${Number(monto).toLocaleString("es-CL")}`);
+    $("#recibo-contacto").text(contactoTransferencia);
+    $("#recibo-cuenta").text(numeroCuenta);
+    $("#recibo-fecha").text(fechaFormateada);
+    $("#recibo-ref").text(numeroReferencia);
+
+    const modalComprobante = new bootstrap.Modal($("#modalComprobante"));
+    modalComprobante.show();
+}
+
+// Boton entendido cierra el modal
+$(document).on("click", "#btn-entendido-recibo", function () {
+    $("#sendmoney").val("");
+    const elementoModal = document.getElementById("modalComprobante");
+    const modalActivo = bootstrap.Modal.getInstance(elementoModal);
+    if (modalActivo) {
+        modalActivo.hide();
+    }
+});
+

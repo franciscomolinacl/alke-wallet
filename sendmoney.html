@@ -53,14 +53,15 @@
           </div>
 
           <div>
-            <a href="./perfil.html" class="text-decoration-none d-block">
+            <a href="#muestraPerfil" data-bs-toggle="offcanvas" class="text-decoration-none d-block" role="button"
+              aria-controls="muestraPerfil">
               <div class="icono-perfil mx-auto mb-1"></div>
               <span>Perfil</span>
             </a>
           </div>
 
           <div>
-            <a href="./more.html" class="text-decoration-none d-block">
+            <a href="#" class="text-decoration-none d-block">
               <div class="icono-mas mx-auto mb-1"></div>
               <span>Otros</span>
             </a>
@@ -81,7 +82,7 @@
 
   <main class="mb-5">
 
-    <!-- Nombre usuario y saldo en moviles - Inicio -->
+    <!-- Nombre usuario y saldo en moviles  -->
     <div class="d-md-none card-saldo text-white p-4 mb-6 shadow-sm">
       <div class="d-flex align-items-center mb-3">
         <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial"></div>
@@ -134,19 +135,19 @@
           <div class="col-4">
             <a href="./deposit.html" class="text-decoration-none">
               <div class="icono-deposit mx-auto mb-1"></div>
-              <small class="fw-medium">Depositar</small>
+              <small>Depositar</small>
             </a>
           </div>
           <div class="col-4">
-            <a href="./sendmoney.html" class="text-decoration-none">
+            <a href="./sendmoney.html" class="text-decoration-none active-nav-link">
               <div class="icono-transfer mx-auto mb-1"></div>
-              <small class="fw-medium">Transferir</small>
+              <small>Transferir</small>
             </a>
           </div>
           <div class="col-4">
             <a href="./transactions.html" class="text-decoration-none">
               <div class="icono-history mx-auto mb-1"></div>
-              <small class="fw-medium">Historial</small>
+              <small>Historial</small>
             </a>
           </div>
         </div>
@@ -158,7 +159,27 @@
         <div class="row text-center g-3">
 
           <div class="col-12 col-md-6">
-            <!-- Input buscador contactos -->
+
+            <form action="" method="post" id="formSendMoney" class="needs-validation" novalidate>
+              <!-- Listado de contactos -->
+              <div class="card mb-3">
+                <div class="card-header">Contactos</div>
+                <div class="d-flex flex-column gap-2" id="contenedor-contactos"></div>
+              </div>
+              <div class="mb-3">
+                <label for="sendmoney" class="form-label fw-bold mb-2">Monto a enviar</label>
+                <input class="form-control p-3 curva-top-left curva-bottom-right" type="number" min="0" name="sendmoney"
+                  id="sendmoney" required />
+              </div>
+
+              <div class="mx-auto mt-4" id="alert-container2"></div>
+              <input class="btn btn-primary form-control mt-4 p-3 d-none" type="submit" id="btn-transferir"
+                value="Realizar transferencia" />
+            </form>
+
+          </div>
+
+          <div class="col-12 col-md-6">
             <div class="card mb-3">
               <div class="card-header">Buscar en agenda</div>
               <input class="form-control p-3" type="text" id="buscar_agenda"
@@ -174,17 +195,18 @@
             <div class="col-12 col-md-6 mx-auto mt-4 w-100" id="alert-container"></div>
             <!-- Formulario nuevo contacto -->
             <div id="contenedor-formulario" class="d-none">
-              <form action="" method="post" id="formContactos" class="needs-validation mt-3" novalidate>
-                <input class="form-control p-3 mb-3" type="text" name="rut" id="rut" pattern="^[0-9kK\-]+$"
-                  placeholder="Ingrese RUT contacto (requerido)" required />
-                <input class="form-control p-3 mb-3" type="text" name="nombre" id="nombre"
-                  placeholder="Ingrese nombre contacto (requerido)" required />
-                <input class="form-control p-3 mb-3" type="text" name="alias" id="alias"
-                  placeholder="Ingrese alias contacto (opcional)" />
-                <input class="form-control p-3 mb-3" type="email" name="email" id="email"
-                  placeholder="Ingrese E-Mail contacto (opcional)" />
+              <form action="" method="post" id="formContactos" class="mt-3">
+                <input class="form-control p-3 mb-3 curva-top-left curva-bottom-right" type="text" name="rut" id="rut"
+                  pattern="^[0-9kK\-]+$" placeholder="Ingrese RUT contacto (requerido)" required />
+                <input class="form-control p-3 mb-3 curva-top-left curva-bottom-right" type="text" name="nombre"
+                  id="nombre" placeholder="Ingrese nombre contacto (requerido)" required />
+                <input class="form-control p-3 mb-3 curva-top-left curva-bottom-right" type="text" name="alias"
+                  id="alias" placeholder="Ingrese alias contacto (opcional)" />
+                <input class="form-control p-3 mb-3 curva-top-left curva-bottom-right" type="email" name="email"
+                  id="email" placeholder="Ingrese E-Mail contacto (opcional)" />
 
-                <select name="banco" id="banco" class="form-control p-3 mb-3" required>
+                <select name="banco" id="banco" class="form-control p-3 mb-3 curva-top-left curva-bottom-right"
+                  required>
                   <option value="">Seleccione banco (requerido)</option>
                   <option value="Banco Estado">Banco Estado</option>
                   <option value="Banco Chile">Banco Chile</option>
@@ -194,14 +216,15 @@
                   <option value="Banco Ripley">Banco Ripley</option>
                 </select>
 
-                <select name="tipocuenta" id="tipocuenta" class="form-control p-3 mb-3" required>
+                <select name="tipocuenta" id="tipocuenta"
+                  class="form-control p-3 mb-3 curva-top-left curva-bottom-right" required>
                   <option value="">Seleccione tipo cuenta (requerido)</option>
                   <option value="cta1">Cuenta corriente</option>
                   <option value="cta2">Cuenta vista</option>
                   <option value="cta3">Cuenta ahorro</option>
                 </select>
-                <input class="form-control p-3 mb-3" type="number" name="cuenta" id="cuenta"
-                  placeholder="Ingrese N° cuenta contacto (requerido)" required />
+                <input class="form-control p-3 mb-3 curva-top-left curva-bottom-right" type="number" name="cuenta"
+                  id="cuenta" placeholder="Ingrese N° cuenta (requerido)" required />
                 <button type="submit" class="btn btn-primary w-100">
                   Guardar contacto
                 </button>
@@ -211,25 +234,7 @@
             <!-- FIN NUEVO CONTACTO -->
 
           </div>
-          <div class="col-12 col-md-6">
 
-            <form action="" method="post" id="formSendMoney" class="needs-validation" novalidate>
-              <!-- Listado de contactos -->
-              <div class="card mb-3">
-                <div class="card-header">Contactos</div>
-                <div class="d-flex flex-column gap-2" id="contenedor-contactos"></div>
-              </div>
-              <div class="mb-3">
-                <label for="sendmoney" class="form-label fw-bold mb-2">Monto a enviar</label>
-                <input class="form-control p-3" type="number" min="0" name="sendmoney" id="sendmoney" required />
-              </div>
-
-              <div class="mx-auto mt-4" id="alert-container2"></div>
-              <input class="btn btn-primary form-control mt-4 p-3 d-none" type="submit" id="btn-transferir"
-                value="Realizar transferencia" />
-            </form>
-
-          </div>
         </div>
       </div>
     </div>
@@ -247,6 +252,128 @@
       </div>
     </div>
   </main>
+
+  <!-- Sidebar Perfil -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="muestraPerfil" aria-labelledby="muestraPerfil">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Perfil</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="text-center my-4">
+        <div
+          class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial shadow mx-auto mb-3 perfil-avatar">
+          F
+        </div>
+        <h5 class="fw-bold mb-1" id="perfil-nombre-grande"></h5>
+        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill small">Cuenta Activa
+          🟢</span>
+      </div>
+
+      <div class="card bg-card p-3 rounded-4 border-0 shadow-sm mb-4">
+
+        <div class="py-2 border-bottom border-secondary border-opacity-10">
+          <small class="text-muted d-block text-uppercase perfil-nombre">Nombre Completo</small>
+          <span class="fw-medium text-body" id="perfil-nombre"></span>
+        </div>
+
+        <div class="py-2 border-bottom border-secondary border-opacity-10 mt-2">
+          <small class="text-muted d-block text-uppercase perfil-fuente">Correo Electrónico</small>
+          <span class="fw-medium text-body" id="perfil-correo"></span>
+        </div>
+
+        <div class="py-2 border-bottom border-secondary border-opacity-10 mt-2">
+          <small class="text-muted d-block text-uppercase perfil-fuente">Fecha de Nacimiento</small>
+          <span class="fw-medium text-body" id="perfil-nacimiento"></span>
+        </div>
+
+        <div class="py-2 mt-2">
+          <small class="text-muted d-block text-uppercase perfil-fuente">Tipo de Cuenta</small>
+          <span class="fw-medium text-body">Cuenta Vista Digital AlK3</span>
+        </div>
+
+      </div>
+
+      <div class="mt-auto">
+        <a href="#" class="btn btn-outline-danger w-100 p-3 rounded-3 fw-bold shadow-sm" id="btnSalirSidebar">
+          🚪 Cerrar Sesión
+        </a>
+      </div>
+
+      <div class="mt-5 d-flex align-items-center justify-content-center">
+        <div class="form-check form-switch custom-switch-container">
+          <input class="form-check-input switch-iconos" type="checkbox" role="switch" id="btnDarkLightSidebar">
+          <label class="form-check-label visually-hidden" for="btnDarkLight">Cambiar modo</label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Modal Comprobante de Transferencia -->
+  <div class="modal fade" id="modalComprobante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm-mobile">
+      <div class="modal-content bg-card border-0 rounded-4 shadow-lg text-body">
+
+        <div class="modal-body p-4 text-center">
+          <div
+            class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+            style="width: 70px; height: 70px;">
+            <span class="fs-1">✓</span>
+          </div>
+
+          <h5 class="fw-bold mb-1">¡Transferencia Exitosa!</h5>
+          <p class="text-muted small mb-4">Tu dinero ha sido enviado correctamente.</p>
+
+          <div class="text-start border border-secondary border-opacity-10 rounded-3 p-3 mb-4 bg-light bg-opacity-10">
+
+            <div class="mb-2 d-flex justify-content-between">
+              <small class="text-muted">Monto enviado:</small>
+              <span class="fw-bold text-primary" id="recibo-monto">$0</span>
+            </div>
+
+            <div class="mb-2 d-flex justify-content-between">
+              <small class="text-muted">Destinatario:</small>
+              <span class="fw-medium" id="recibo-contacto"></span>
+            </div>
+
+            <div class="mb-2 d-flex justify-content-between">
+              <small class="text-muted">N° Cuenta:</small>
+              <span class="fw-medium text-muted small" id="recibo-cuenta"></span>
+            </div>
+
+            <div class="mb-2 d-flex justify-content-between">
+              <small class="text-muted">Fecha y Hora:</small>
+              <span class="fw-medium small" id="recibo-fecha"></span>
+            </div>
+
+            <div class="d-flex justify-content-between border-top pt-2 mt-2 border-secondary border-opacity-10">
+              <small class="text-muted">N° Ref:</small>
+              <span class="fw-medium text-secondary small" id="recibo-ref"></span>
+            </div>
+
+          </div>
+
+          <div class="col-6 mb-4 m-auto">
+            <button type="button"
+              class="btn btn-outline-primary w-100 p-3 rounded-3 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2"
+              id="btn-compartir-recibo">
+              <div class="icono-share"></div>
+              <span>Compartir</span>
+            </button>
+          </div>
+
+          <button type="button" class="btn btn-primary w-100 p-3 rounded-3 fw-bold shadow-sm" id="btn-entendido-recibo">
+            Entendido
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <footer class="fixed-bottom border-top border-secondary text-center text-secondary small bg-nav">
     <!-- Footer pantallas grandes -->
@@ -291,13 +418,15 @@
         </div>
 
         <div class="col">
-          <a href="./perfil.html" class="text-decoration-none">
-            <div class="icono-perfil mx-auto mb-1"></div>
+          <a href="#muestraPerfil" data-bs-toggle="offcanvas" class="text-decoration-none" role="button"
+            aria-controls="muestraPerfil">
+            <div class=" icono-perfil mx-auto mb-1">
+            </div>
             <span>Perfil</span>
           </a>
         </div>
         <div class="col">
-          <a href="./more.html" class="text-decoration-none">
+          <a href="#" class="text-decoration-none">
             <div class="icono-mas mx-auto mb-1"></div>
             <span>Otros</span>
           </a>

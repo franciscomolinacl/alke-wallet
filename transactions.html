@@ -53,14 +53,15 @@
           </div>
 
           <div>
-            <a href="./perfil.html" class="text-decoration-none d-block">
+            <a href="#muestraPerfil" data-bs-toggle="offcanvas" class="text-decoration-none d-block" role="button"
+              aria-controls="muestraPerfil">
               <div class="icono-perfil mx-auto mb-1"></div>
               <span>Perfil</span>
             </a>
           </div>
 
           <div>
-            <a href="./more.html" class="text-decoration-none d-block">
+            <a href="#" class="text-decoration-none d-block">
               <div class="icono-mas mx-auto mb-1"></div>
               <span>Otros</span>
             </a>
@@ -134,19 +135,19 @@
           <div class="col-4">
             <a href="./deposit.html" class="text-decoration-none">
               <div class="icono-deposit mx-auto mb-1"></div>
-              <small class="fw-medium">Depositar</small>
+              <small>Depositar</small>
             </a>
           </div>
           <div class="col-4">
             <a href="./sendmoney.html" class="text-decoration-none">
               <div class="icono-transfer mx-auto mb-1"></div>
-              <small class="fw-medium">Transferir</small>
+              <small>Transferir</small>
             </a>
           </div>
           <div class="col-4">
-            <a href="./transactions.html" class="text-decoration-none">
+            <a href="./transactions.html" class="text-decoration-none active-nav-link">
               <div class="icono-history mx-auto mb-1"></div>
-              <small class="fw-medium">Historial</small>
+              <small>Historial</small>
             </a>
           </div>
         </div>
@@ -158,7 +159,7 @@
         <div class="col-12 col-md-7">
           <div class="card bg-card p-4 rounded-4 shadow-lg border-0 mb-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="fw-bold m-0 text-body">Historial de Movimientos</h5>
+              <h5 class="fw-bold m-0 text-secondary">Ultimos Movimientos</h5>
               <span class="badge bg-primary rounded-pill" id="total-txs">0</span>
             </div>
             <div class="row text-center g-3">
@@ -188,7 +189,6 @@
                 </div>
                 <div class="fs-2">📈</div>
               </div>
-              <!-- Egresos totales -->
               <div
                 class="d-flex justify-content-between align-items-center mb-3 border-top pt-3 border-secondary border-opacity-10">
                 <div>
@@ -197,7 +197,6 @@
                 </div>
                 <div class="fs-2">📉</div>
               </div>
-              <!-- Balance neto -->
               <div
                 class="d-flex justify-content-between align-items-center border-top pt-3 border-secondary border-opacity-10">
                 <div>
@@ -228,6 +227,63 @@
       </div>
     </div>
   </main>
+
+  <!-- Sidebar Perfil -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="muestraPerfil" aria-labelledby="muestraPerfil">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Perfil</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="text-center my-4">
+        <div
+          class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial shadow mx-auto mb-3 perfil-avatar">
+          F
+        </div>
+        <h5 class="fw-bold mb-1" id="perfil-nombre-grande"></h5>
+        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill small">Cuenta Activa
+          🟢</span>
+      </div>
+
+      <div class="card bg-card p-3 rounded-4 border-0 shadow-sm mb-4">
+
+        <div class="py-2 border-bottom border-secondary border-opacity-10">
+          <small class="text-muted d-block text-uppercase perfil-nombre">Nombre Completo</small>
+          <span class="fw-medium text-body" id="perfil-nombre"></span>
+        </div>
+
+        <div class="py-2 border-bottom border-secondary border-opacity-10 mt-2">
+          <small class="text-muted d-block text-uppercase perfil-fuente">Correo Electrónico</small>
+          <span class="fw-medium text-body" id="perfil-correo"></span>
+        </div>
+
+        <div class="py-2 border-bottom border-secondary border-opacity-10 mt-2">
+          <small class="text-muted d-block text-uppercase perfil-fuente">Fecha de Nacimiento</small>
+          <span class="fw-medium text-body" id="perfil-nacimiento"></span>
+        </div>
+
+        <div class="py-2 mt-2">
+          <small class="text-muted d-block text-uppercase perfil-fuente">Tipo de Cuenta</small>
+          <span class="fw-medium text-body">Cuenta Vista Digital AlK3</span>
+        </div>
+
+      </div>
+
+      <div class="mt-auto">
+        <a href="#" class="btn btn-outline-danger w-100 p-3 rounded-3 fw-bold shadow-sm" id="btnSalirSidebar">
+          🚪 Cerrar Sesión
+        </a>
+      </div>
+
+      <div class="mt-5 d-flex align-items-center justify-content-center">
+        <div class="form-check form-switch custom-switch-container">
+          <input class="form-check-input switch-iconos" type="checkbox" role="switch" id="btnDarkLightSidebar">
+          <label class="form-check-label visually-hidden" for="btnDarkLight">Cambiar modo</label>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <footer class="fixed-bottom border-top border-secondary text-center text-secondary small bg-nav">
     <!-- Footer pantallas grandes -->
@@ -272,13 +328,15 @@
         </div>
 
         <div class="col">
-          <a href="./perfil.html" class="text-decoration-none">
-            <div class="icono-perfil mx-auto mb-1"></div>
+          <a href="#muestraPerfil" data-bs-toggle="offcanvas" class="text-decoration-none" role="button"
+            aria-controls="muestraPerfil">
+            <div class=" icono-perfil mx-auto mb-1">
+            </div>
             <span>Perfil</span>
           </a>
         </div>
         <div class="col">
-          <a href="./more.html" class="text-decoration-none">
+          <a href="#" class="text-decoration-none">
             <div class="icono-mas mx-auto mb-1"></div>
             <span>Otros</span>
           </a>

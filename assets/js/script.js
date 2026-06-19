@@ -62,17 +62,17 @@ function pagDeposito() {
     Utils.cargarDatosUsuario();
     Utils.saldoCaja();
     Utils.loginActivo("pagDeposito");
-    Utils.salir();    
+    Utils.salir();
 }
 
 // Pagina Transferir
 function pagTransferir() {
     Utils.transferirPag();
-    Utils.modoDarkLight();  
+    Utils.modoDarkLight();
     Utils.cargarDatosUsuario();
     Utils.saldoCaja();
     Utils.loginActivo("pagTransferir");
-    Utils.salir();    
+    Utils.salir();
 }
 
 // Pagina Historial
@@ -80,9 +80,9 @@ function pagHistorial() {
     Utils.historialPag();
     Utils.modoDarkLight();
     Utils.cargarDatosUsuario();
-    Utils.saldoCaja();    
+    Utils.saldoCaja();
     Utils.loginActivo("pagHistorial");
-    Utils.salir();    
+    Utils.salir();
 }
 
 // Registro de funciones de paginas

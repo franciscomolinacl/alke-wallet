@@ -48,7 +48,8 @@
 .icono-wifi,
 .icono-agua,
 .icono-salir,
-.icono-mas  {
+.icono-mas,
+.icono-share  {
   display: block;
   width: 24px;
   height: 24px;
@@ -101,4 +102,8 @@
 
 .icono-mas {
   background-image: url("../img/icons/mas.svg");
+}
+
+.icono-share {
+  background-image: url("../img/icons/share.svg");
 }
