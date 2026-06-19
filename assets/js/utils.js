@@ -575,7 +575,7 @@ function mostrarContactosEnCheck(textoBuscar = "") {
         $contenedor.append(estructuraContacto);
     });
     $contenedor.off("click", ".btn-eliminar-contacto").on("click", ".btn-eliminar-contacto", function (e) {
-        e.preventDefault(); 
+        e.preventDefault();
 
         const indiceABorrar = $(this).data("indice");
         let listaOriginal = JSON.parse(localStorage.getItem("misContactos")) || [];
@@ -607,60 +607,61 @@ function mostrarContactosEnCheck(textoBuscar = "") {
 }
 
 export function historialPag() {
-  leerTransacciones(); 
-  $(document).on("change", "#filtro-movimientos", function () {
-    const opcionSeleccionada = $(this).val(); 
+    leerTransacciones();
+    calcularEstadisticas();
+    $(document).on("change", "#filtro-movimientos", function () {
+        const opcionSeleccionada = $(this).val();
 
-    if (opcionSeleccionada === "todos") {
-      $(".tarjeta-movimiento").fadeIn(300);
-    } else {
-      $(".tarjeta-movimiento").hide();
-      $(`.tarjeta-movimiento.${opcionSeleccionada}`).fadeIn(300); 
-    }
-  });
+        if (opcionSeleccionada === "todos") {
+            $(".tarjeta-movimiento").fadeIn(300);
+        } else {
+            $(".tarjeta-movimiento").hide();
+            $(`.tarjeta-movimiento.${opcionSeleccionada}`).fadeIn(300);
+        }
+    });
 }
 
-function leerTransacciones(){
+function leerTransacciones() {
     const contenedor = $("#contenedor-transacciones");
-  if (!contenedor.length) return;
+    if (!contenedor.length) return;
 
-  const datosStorage = localStorage.getItem("transacciones");
+    const datosStorage = localStorage.getItem("transacciones");
 
-  if (!datosStorage) {
-    contenedor.html(`
+    if (!datosStorage) {
+        contenedor.html(`
       <div class="card mb-2 shadow-sm animate-vacio">
         <div class="card-body d-flex justify-content-between align-items-center text-muted">
           Aún no registras movimientos.
         </div>
       </div>
     `);
-    return;
-  }
+        return;
+    }
 
-  const lista = JSON.parse(datosStorage);
-  lista.sort((a, b) => {
-    const arreglarFecha = (fechaStr) => {
-      const [fechaPart, horaPart] = fechaStr.trim().split(" ");
-      const [dia, mes, anio] = fechaPart.includes("-")
-        ? fechaPart.split("-")
-        : fechaPart.split("/");
-      return `${anio}-${mes}-${dia} ${horaPart || ""}`.trim();
-    };
-    return (
-      new Date(arreglarFecha(b.fechayhora)) -
-      new Date(arreglarFecha(a.fechayhora))
-    );
-  });
-  contenedor.empty(); 
+    const lista = JSON.parse(datosStorage);
+    lista.sort((a, b) => {
+        const arreglarFecha = (fechaStr) => {
+            const [fechaPart, horaPart] = fechaStr.trim().split(" ");
+            const [dia, mes, anio] = fechaPart.includes("-")
+                ? fechaPart.split("-")
+                : fechaPart.split("/");
+            return `${anio}-${mes}-${dia} ${horaPart || ""}`.trim();
+        };
+        return (
+            new Date(arreglarFecha(b.fechayhora)) -
+            new Date(arreglarFecha(a.fechayhora))
+        );
+    });
+    contenedor.empty();
 
-  $.each(lista, function (index, tx) {
-    const tipoNormalizado = tx.tipo.toLowerCase();
-    const colorMonto =
-      tipoNormalizado === "deposito" ? "text-success" : "text-danger";
-    const signo = tipoNormalizado === "deposito" ? "+" : "-";
-    const montoFormateado = Number(tx.monto).toLocaleString("es-CL"); // Formateo a moneda
+    $.each(lista, function (index, tx) {
+        const tipoNormalizado = tx.tipo.toLowerCase();
+        const colorMonto =
+            tipoNormalizado === "deposito" ? "text-success" : "text-danger";
+        const signo = tipoNormalizado === "deposito" ? "+" : "-";
+        const montoFormateado = Number(tx.monto).toLocaleString("es-CL"); // Formateo a moneda
 
-    const estructuraTarjeta = `
+        const estructuraTarjeta = `
       <div class="card mb-2 shadow-sm tarjeta-movimiento ${tx.tipo.toLowerCase()}">
           <div class="card-body d-flex justify-content-between align-items-center">
               <div>
@@ -676,8 +677,8 @@ function leerTransacciones(){
       </div>
     `;
 
-    contenedor.append(estructuraTarjeta); 
-  });
+        contenedor.append(estructuraTarjeta);
+    });
 }
 
 
@@ -820,5 +821,38 @@ export function salir() {
             miModal.show();
             redireccion("./login.html", 2);
         });
+    }
+}
+
+export function calcularEstadisticas() {
+    const datosStorage = localStorage.getItem("transacciones");
+    if (!datosStorage) return;
+
+    const lista = JSON.parse(datosStorage);
+
+    let ingresos = 0;
+    let egresos = 0;
+
+    lista.forEach(tx => {
+        const monto = Number(tx.monto) || 0;
+        if (tx.tipo.toLowerCase() === "deposito") {
+            ingresos += monto;
+        } else {
+            egresos += monto;
+        }
+    });
+
+    const balance = ingresos - egresos;
+
+    $("#total-ingresos").text(`+$${ingresos.toLocaleString("es-CL")}`);
+    $("#total-egresos").text(`-$${egresos.toLocaleString("es-CL")}`);
+    $("#total-txs").text(lista.length);
+
+    const $balanceElemento = $("#balance-neto");
+    $balanceElemento.text(`$${balance.toLocaleString("es-CL")}`);
+    if (balance >= 0) {
+        $balanceElemento.removeClass("text-danger").addClass("text-primary");
+    } else {
+        $balanceElemento.removeClass("text-primary").addClass("text-danger");
     }
 }
