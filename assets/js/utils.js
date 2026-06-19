@@ -575,7 +575,7 @@ function mostrarContactosEnCheck(textoBuscar = "") {
         $contenedor.append(estructuraContacto);
     });
     $contenedor.off("click", ".btn-eliminar-contacto").on("click", ".btn-eliminar-contacto", function (e) {
-        e.preventDefault(); 
+        e.preventDefault();
 
         const indiceABorrar = $(this).data("indice");
         let listaOriginal = JSON.parse(localStorage.getItem("misContactos")) || [];
@@ -605,6 +605,82 @@ function mostrarContactosEnCheck(textoBuscar = "") {
         $("#btn-transferir").removeClass("d-none").hide().fadeIn(400);
     });
 }
+
+export function historialPag() {
+    leerTransacciones();
+    calcularEstadisticas();
+    $(document).on("change", "#filtro-movimientos", function () {
+        const opcionSeleccionada = $(this).val();
+
+        if (opcionSeleccionada === "todos") {
+            $(".tarjeta-movimiento").fadeIn(300);
+        } else {
+            $(".tarjeta-movimiento").hide();
+            $(`.tarjeta-movimiento.${opcionSeleccionada}`).fadeIn(300);
+        }
+    });
+}
+
+function leerTransacciones() {
+    const contenedor = $("#contenedor-transacciones");
+    if (!contenedor.length) return;
+
+    const datosStorage = localStorage.getItem("transacciones");
+
+    if (!datosStorage) {
+        contenedor.html(`
+      <div class="card mb-2 shadow-sm animate-vacio">
+        <div class="card-body d-flex justify-content-between align-items-center text-muted">
+          Aún no registras movimientos.
+        </div>
+      </div>
+    `);
+        return;
+    }
+
+    const lista = JSON.parse(datosStorage);
+    lista.sort((a, b) => {
+        const arreglarFecha = (fechaStr) => {
+            const [fechaPart, horaPart] = fechaStr.trim().split(" ");
+            const [dia, mes, anio] = fechaPart.includes("-")
+                ? fechaPart.split("-")
+                : fechaPart.split("/");
+            return `${anio}-${mes}-${dia} ${horaPart || ""}`.trim();
+        };
+        return (
+            new Date(arreglarFecha(b.fechayhora)) -
+            new Date(arreglarFecha(a.fechayhora))
+        );
+    });
+    contenedor.empty();
+
+    $.each(lista, function (index, tx) {
+        const tipoNormalizado = tx.tipo.toLowerCase();
+        const colorMonto =
+            tipoNormalizado === "deposito" ? "text-success" : "text-danger";
+        const signo = tipoNormalizado === "deposito" ? "+" : "-";
+        const montoFormateado = Number(tx.monto).toLocaleString("es-CL"); // Formateo a moneda
+
+        const estructuraTarjeta = `
+      <div class="card mb-2 shadow-sm tarjeta-movimiento ${tx.tipo.toLowerCase()}">
+          <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                  <h6 class="mb-0 fw-bold">${tx.contacto}</h6>
+                  <small class="text-muted">${tx.fechayhora}</small>
+              </div>
+              <div class="text-end">
+                  <span class="fw-bold ${colorMonto}">${signo}$${montoFormateado}</span>
+                  <br>
+                  <small class="badge bg-light text-dark text-capitalize">${tipoNormalizado}</small>
+              </div>
+          </div>
+      </div>
+    `;
+
+        contenedor.append(estructuraTarjeta);
+    });
+}
+
 
 const salt = "AlK3-W4ll3t_T4l3nt0-D1git4L_2026";
 // Redirección
@@ -745,5 +821,38 @@ export function salir() {
             miModal.show();
             redireccion("./login.html", 2);
         });
+    }
+}
+
+export function calcularEstadisticas() {
+    const datosStorage = localStorage.getItem("transacciones");
+    if (!datosStorage) return;
+
+    const lista = JSON.parse(datosStorage);
+
+    let ingresos = 0;
+    let egresos = 0;
+
+    lista.forEach(tx => {
+        const monto = Number(tx.monto) || 0;
+        if (tx.tipo.toLowerCase() === "deposito") {
+            ingresos += monto;
+        } else {
+            egresos += monto;
+        }
+    });
+
+    const balance = ingresos - egresos;
+
+    $("#total-ingresos").text(`+$${ingresos.toLocaleString("es-CL")}`);
+    $("#total-egresos").text(`-$${egresos.toLocaleString("es-CL")}`);
+    $("#total-txs").text(lista.length);
+
+    const $balanceElemento = $("#balance-neto");
+    $balanceElemento.text(`$${balance.toLocaleString("es-CL")}`);
+    if (balance >= 0) {
+        $balanceElemento.removeClass("text-danger").addClass("text-primary");
+    } else {
+        $balanceElemento.removeClass("text-primary").addClass("text-danger");
     }
 }

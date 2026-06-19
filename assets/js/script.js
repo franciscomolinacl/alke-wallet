@@ -79,6 +79,16 @@ function pagTransferir() {
     Utils.salir();    
 }
 
+// Pagina Historial
+function pagHistorial() {
+    Utils.historialPag();
+    Utils.modoDarkLight();
+    Utils.cargarDatosUsuario();
+    Utils.saldoCaja();    
+    Utils.loginActivo("pagHistorial");
+    Utils.salir();    
+}
+
 // Registro de funciones de paginas
 window.pagIndex = pagIndex;
 window.pagLogin = pagLogin;
@@ -88,3 +98,4 @@ window.pagReset = pagReset;
 window.pagMenu = pagMenu;
 window.pagDeposito = pagDeposito;
 window.pagTransferir = pagTransferir;
+window.pagHistorial = pagHistorial;
