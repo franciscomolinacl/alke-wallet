@@ -69,6 +69,16 @@ function pagDeposito() {
     Utils.salir();    
 }
 
+// Pagina Transferir
+function pagTransferir() {
+    Utils.transferirPag();
+    Utils.modoDarkLight();  
+    Utils.cargarDatosUsuario();
+    Utils.saldoCaja();
+    Utils.loginActivo("pagTransferir");
+    Utils.salir();    
+}
+
 // Registro de funciones de paginas
 window.pagIndex = pagIndex;
 window.pagLogin = pagLogin;
@@ -77,3 +87,4 @@ window.pagRecovery = pagRecovery;
 window.pagReset = pagReset;
 window.pagMenu = pagMenu;
 window.pagDeposito = pagDeposito;
+window.pagTransferir = pagTransferir;

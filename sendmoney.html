@@ -8,10 +8,10 @@
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
   <link rel="stylesheet" href="./assets/css/style.css" />
   <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
-  <title>Alke Wallet - Menu</title>
+  <title>Alke Wallet - Transferir</title>
 </head>
 
-<body class="d-flex flex-column min-vh-100 bg-body text-body d-none" id="pagMenu">
+<body class="d-flex flex-column min-vh-100 bg-body text-body d-none" id="pagTransferir">
 
   <!-- Menu navbar para pantallas grandes - Inicio -->
   <nav class="navbar d-none d-md-block navbar-expand-lg bg-nav py-3 border-bottom border-secondary">
@@ -25,7 +25,7 @@
         <div class="d-flex gap-4 text-center fs-menu">
 
           <div>
-            <a href="./menu.html" class="text-decoration-none active-nav-link d-block">
+            <a href="./menu.html" class="text-decoration-none d-block">
               <div class="icono-home mx-auto mb-1"></div>
               <span>Inicio</span>
             </a>
@@ -39,7 +39,7 @@
           </div>
 
           <div>
-            <a href="./sendmoney.html" class="text-decoration-none d-block">
+            <a href="./sendmoney.html" class="text-decoration-none active-nav-link d-block">
               <div class="icono-transfer mx-auto mb-1"></div>
               <span>Transferir</span>
             </a>
@@ -152,54 +152,86 @@
         </div>
       </div>
 
-      <!-- Lista de pagos -->
-      <h6 class="fw-bold mb-3 text-secondary">Lista de Pagos</h6>
+      <!-- Transferir -->
       <div class="card bg-card p-4 rounded-4 shadow-lg border-0 mb-5">
+        <h6 class="fw-bold mb-3 text-secondary text-center">Transferir</h6>
         <div class="row text-center g-3">
-          <div class="col-3">
-            <div class="icono-agua mx-auto mb-2"></div>
-            <span class="d-block small">Agua</span>
+
+          <div class="col-12 col-md-6">
+            <!-- Input buscador contactos -->
+            <div class="card mb-3">
+              <div class="card-header">Buscar en agenda</div>
+              <input class="form-control p-3" type="text" id="buscar_agenda"
+                placeholder="Escribe el nombre del contacto..." />
+            </div>
+
+            <!-- INICIO NUEVO CONTACTO -->
+            <!-- Boton formulario de nuevo contacto-->
+            <button type="button" id="btn-mostrar-formulario" class="btn btn-secondary form-control p-3">
+              Agregar nuevo contacto
+            </button>
+
+            <div class="col-12 col-md-6 mx-auto mt-4 w-100" id="alert-container"></div>
+            <!-- Formulario nuevo contacto -->
+            <div id="contenedor-formulario" class="d-none">
+              <form action="" method="post" id="formContactos" class="needs-validation mt-3" novalidate>
+                <input class="form-control p-3 mb-3" type="text" name="rut" id="rut" pattern="^[0-9kK\-]+$"
+                  placeholder="Ingrese RUT contacto (requerido)" required />
+                <input class="form-control p-3 mb-3" type="text" name="nombre" id="nombre"
+                  placeholder="Ingrese nombre contacto (requerido)" required />
+                <input class="form-control p-3 mb-3" type="text" name="alias" id="alias"
+                  placeholder="Ingrese alias contacto (opcional)" />
+                <input class="form-control p-3 mb-3" type="email" name="email" id="email"
+                  placeholder="Ingrese E-Mail contacto (opcional)" />
+
+                <select name="banco" id="banco" class="form-control p-3 mb-3" required>
+                  <option value="">Seleccione banco (requerido)</option>
+                  <option value="Banco Estado">Banco Estado</option>
+                  <option value="Banco Chile">Banco Chile</option>
+                  <option value="Banco Santander">Banco Santander</option>
+                  <option value="Banco Itau">Banco Itau</option>
+                  <option value="Banco Falabella">Banco Falabella</option>
+                  <option value="Banco Ripley">Banco Ripley</option>
+                </select>
+
+                <select name="tipocuenta" id="tipocuenta" class="form-control p-3 mb-3" required>
+                  <option value="">Seleccione tipo cuenta (requerido)</option>
+                  <option value="cta1">Cuenta corriente</option>
+                  <option value="cta2">Cuenta vista</option>
+                  <option value="cta3">Cuenta ahorro</option>
+                </select>
+                <input class="form-control p-3 mb-3" type="number" name="cuenta" id="cuenta"
+                  placeholder="Ingrese N° cuenta contacto (requerido)" required />
+                <button type="submit" class="btn btn-primary w-100">
+                  Guardar contacto
+                </button>
+              </form>
+            </div>
+
+            <!-- FIN NUEVO CONTACTO -->
+
           </div>
-          <div class="col-3">
-            <div class="icono-luz mx-auto mb-2"></div>
-            <span class="d-block small">Luz</span>
-          </div>
-          <div class="col-3">
-            <div class="icono-phone mx-auto mb-2"></div>
-            <span class="d-block small">Celular</span>
-          </div>
-          <div class="col-3">
-            <div class="icono-wifi mx-auto mb-2"></div>
-            <span class="d-block small">Internet</span>
+          <div class="col-12 col-md-6">
+
+            <form action="" method="post" id="formSendMoney" class="needs-validation" novalidate>
+              <!-- Listado de contactos -->
+              <div class="card mb-3">
+                <div class="card-header">Contactos</div>
+                <div class="d-flex flex-column gap-2" id="contenedor-contactos"></div>
+              </div>
+              <div class="mb-3">
+                <label for="sendmoney" class="form-label fw-bold mb-2">Monto a enviar</label>
+                <input class="form-control p-3" type="number" min="0" name="sendmoney" id="sendmoney" required />
+              </div>
+
+              <div class="mx-auto mt-4" id="alert-container2"></div>
+              <input class="btn btn-primary form-control mt-4 p-3 d-none" type="submit" id="btn-transferir"
+                value="Realizar transferencia" />
+            </form>
+
           </div>
         </div>
       </div>
-
-      <!-- Descuentos y promociones -->
-      <h6 class="fw-bold mb-3 mt-4 text-secondary">Promociones para ti</h6>
-
-      <div class="card card-promo card-promo-grad1 text-white p-3 mb-3 border-0 shadow-sm">
-        <div class="d-flex align-items-center justify-content-between">
-          <div>
-            <span class="badge bg-light text-primary mb-1 fw-bold">Beneficio AlKe</span>
-            <h6 class="mb-1 fw-bold">20% de dcto en Combustible</h6>
-            <small class="text-white-80">Pagando con tu saldo AlKe Wallet</small>
-          </div>
-          <div class="fs-1 px-2">⛽</div>
-        </div>
-      </div>
-
-      <div class="card card-promo card-promo-grad2 text-white p-3 mb-3 border-0 shadow-sm">
-        <div class="d-flex align-items-center justify-content-between">
-          <div>
-            <span class="badge bg-dark text-white mb-1 fw-bold">Destacado</span>
-            <h6 class="mb-1 fw-bold">Pide tu Tarjeta Prepago Virtual</h6>
-            <small class="text-white-80">¡Es gratis y la activas en un segundo!</small>
-          </div>
-          <div class="fs-1 px-2">💳</div>
-        </div>
-      </div>
-
     </div>
 
     <!-- Modal de salida -->
@@ -245,14 +277,14 @@
       <div class="row text-center fs-menu">
 
         <div class="col">
-          <a href="./menu.html" class="text-decoration-none active-nav-link">
+          <a href="./menu.html" class="text-decoration-none">
             <div class="icono-home mx-auto mb-1"></div>
             <span>Inicio</span>
           </a>
         </div>
 
         <div class="col">
-          <a href="./sendmoney.html" class="text-decoration-none">
+          <a href="./sendmoney.html" class="text-decoration-none active-nav-link">
             <div class="icono-transfer mx-auto mb-1"></div>
             <span>Transferir</span>
           </a>
