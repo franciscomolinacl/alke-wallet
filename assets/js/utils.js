@@ -25,7 +25,7 @@ export function activarValidacion() {
                 event.preventDefault();
                 event.stopPropagation();
 
-                form.querySelectorAll("input[required]").forEach((input) => {
+                form.querySelectorAll("input[required], select[required]").forEach((input) => {
                     const inputGroup = input.closest(".input-group");
                     const iconoBlock = inputGroup ? inputGroup.querySelector(".input-group-text") : null;
                     if (!input.checkValidity() && iconoBlock) {
@@ -287,12 +287,12 @@ export function depositoPag() {
             const valorInput = inputDeposito.val().trim();
 
             if (valorInput) {
-                const montoADepositar = Number(valorInput); 
-                let saldoGuardado = Number(localStorage.getItem("saldoUsuario")); 
-                let nuevoSaldo = saldoGuardado + montoADepositar; 
-                localStorage.setItem("saldoUsuario", nuevoSaldo); 
+                const montoADepositar = Number(valorInput);
+                let saldoGuardado = Number(localStorage.getItem("saldoUsuario"));
+                let nuevoSaldo = saldoGuardado + montoADepositar;
+                localStorage.setItem("saldoUsuario", nuevoSaldo);
                 const fechaYHora = new Date().toLocaleString("es-CL");
-                guardarTransaccion("Deposito", montoADepositar, "deposito", fechaYHora); 
+                guardarTransaccion("Deposito", montoADepositar, "deposito", fechaYHora);
                 const montoFormateado = montoADepositar.toLocaleString("es-CL", {
                     style: "currency",
                     currency: "CLP",
@@ -323,6 +323,287 @@ export function depositoPag() {
             }
         });
     }
+}
+
+export function transferirPag() {
+    activarValidacion();
+    agregarContacto();
+
+    const formSendMoney = $("#formSendMoney");
+
+    if (formSendMoney.length) {
+        formSendMoney.submit(function (evento) {
+            evento.preventDefault();
+
+            const sendmoneyTransferencia = $("#sendmoney").val().trim();
+            const contactoSeleccionado = $("input[name='contacto']:checked");
+
+            if (
+                sendmoneyTransferencia && contactoSeleccionado.length
+            ) {
+                const idTransferencia = contactoSeleccionado.attr("id");
+                const contactoTransferencia = $(
+                    `label[for="${idTransferencia}"]`,
+                ).text();
+                const montoATransferir = Number(sendmoneyTransferencia);
+                let saldoGuardado = Number(localStorage.getItem("saldoUsuario"));
+
+                if (saldoGuardado < montoATransferir) {
+                    let respuesta = `El monto a transferir debe ser inferior al saldo de $${saldoGuardado.toLocaleString("es-CL")}`;
+                    $("#alert-container2")
+                        .html(
+                            `<div class="alert alert-warning">¡Advertencia! ${respuesta}</div>`,
+                        )
+                        .show()
+                        .delay(4000)
+                        .fadeOut(800, function () {
+                            $("#sendmoney").focus();
+                        });
+                    $("#sendmoney").removeClass("is-invalid");
+                    return;
+                }
+
+                let nuevoSaldo = saldoGuardado - montoATransferir;
+                localStorage.setItem("saldoUsuario", nuevoSaldo);
+
+                const fechaYHora = new Date().toLocaleString("es-CL");
+                guardarTransaccion(
+                    contactoTransferencia,
+                    montoATransferir,
+                    "transferencia",
+                    fechaYHora,
+                );
+
+                $("#alert-container2")
+                    .html(
+                        `<div class="alert alert-success">¡Éxito! La transferencia se efectuó exitosamente.</div>`,
+                    )
+                    .show()
+                    .delay(4000)
+                    .fadeOut(800, function () {
+                        $("#sendmoney").val("");
+                        $("#sendmoney").focus();
+                    });
+                saldoCaja();
+            }
+            else {
+                let respuesta2 = "";
+                if (!sendmoneyTransferencia) {
+                    respuesta2 = "El monto no puede estar vacío.";
+                } else
+                    if (!contactoSeleccionado.length) {
+                        respuesta2 = "Debe seleccionar un contacto para transferir.";
+                    }
+
+                $("#alert-container2")
+                    .html(
+                        `<div class="alert alert-warning">¡Advertencia! ${respuesta2}</div>`,
+                    )
+                    .show()
+                    .delay(3500)
+                    .fadeOut(800, function () {
+                        if (!sendmoneyTransferencia) {
+                            $("#sendmoney").removeClass("is-invalid");
+                            $(".invalid-feedback").remove();
+                            $("#sendmoney").focus();
+                        }
+                    });
+            }
+        });
+    }
+}
+
+// Agregar contacto
+function agregarContacto() {
+    filtroContactos();
+
+    $("#btn-mostrar-formulario").click(function () {
+        if ($("#contenedor-formulario").hasClass("d-none")) {
+            $("#contenedor-formulario").removeClass("d-none").hide();
+        }
+
+        $("#contenedor-formulario").slideToggle(400, function () {
+            if ($("#contenedor-formulario").is(":visible")) {
+                $("#rut").focus();
+            }
+        });
+    });
+
+    if ($("#formContactos").length) {
+        $("#formContactos").submit(function (evento) {
+            evento.preventDefault();
+
+            const rutContacto = $("#rut").val();
+            const nombreContacto = $("#nombre").val();
+            const aliasContacto = $("#alias").val();
+            const emailContacto = $("#email").val();
+            const bancoContacto = $("#banco").val();
+            const tipocuentaContacto = $("#tipocuenta").val();
+            const cuentaContacto = $("#cuenta").val();
+
+            if (
+                rutContacto &&
+                nombreContacto &&
+                bancoContacto &&
+                tipocuentaContacto &&
+                cuentaContacto
+            ) {
+                let listaContactos = localStorage.getItem("misContactos");
+                if (listaContactos === null) {
+                    listaContactos = [];
+                } else {
+                    listaContactos = JSON.parse(listaContactos);
+                }
+
+                const nuevoContacto = {
+                    rut: rutContacto,
+                    nombre: nombreContacto,
+                    alias: aliasContacto,
+                    email: emailContacto,
+                    banco: bancoContacto,
+                    tipocuenta: tipocuentaContacto,
+                    cuenta: cuentaContacto,
+                };
+
+                listaContactos.push(nuevoContacto);
+                localStorage.setItem("misContactos", JSON.stringify(listaContactos));
+                $("#formContactos")[0].reset();
+                $("#formContactos").find(".form-control, .form-select").removeClass("is-invalid is-valid");
+                $("#formContactos").find(".invalid-feedback").remove();
+
+                $("#alert-container")
+                    .html(
+                        `<div class="alert alert-success">¡Éxito! Contacto agregado correctamente.</div>`,
+                    )
+                    .show()
+                    .delay(3000)
+                    .fadeOut(800);
+                $("#contenedor-formulario").slideUp(400);
+
+                mostrarContactosEnCheck();
+            } else {
+                $("#alert-container")
+                    .html(
+                        `<div class="alert alert-warning">¡Advertencia! Debe completar los campos obligatorios.</div>`,
+                    )
+                    .show()
+                    .delay(3000)
+                    .fadeOut(800, function () {
+                        $("#rut").focus();
+                    });
+            }
+        });
+    }
+}
+
+// Filtro de contactos para transferencia
+function filtroContactos() {
+    mostrarContactosEnCheck();
+
+    const inputBuscador = $("#buscar_agenda");
+
+    if (inputBuscador.length) {
+        inputBuscador.on("input", function () {
+            const textoEscrito = $(this).val();
+            mostrarContactosEnCheck(textoEscrito);
+        });
+    }
+}
+
+// Leer contactos
+function mostrarContactosEnCheck(textoBuscar = "") {
+    const contenedor = document.getElementById("contenedor-contactos");
+    if (!contenedor) return;
+
+    const datosStorage = localStorage.getItem("misContactos");
+
+    if (!datosStorage) {
+        contenedor.innerHTML =
+            '<p class="text-muted p-3 text-center" id="vacio">No tienes contactos guardados.</p>';
+        return;
+    }
+
+    let lista = JSON.parse(datosStorage);
+
+    if (textoBuscar.trim() !== "") {
+        const textoMinuscula = textoBuscar.toLowerCase();
+
+        lista = lista.filter((contacto) => {
+            const nombre = contacto.nombre ? contacto.nombre.toLowerCase() : "";
+            const alias = contacto.alias ? contacto.alias.toLowerCase() : "";
+
+            return nombre.includes(textoMinuscula) || alias.includes(textoMinuscula);
+        });
+    }
+
+    contenedor.innerHTML = "";
+
+    if (lista.length === 0) {
+        contenedor.innerHTML =
+            '<p class="text-muted p-3 text-center">No se encontraron contactos.</p>';
+        return;
+    }
+
+    const $contenedor = $("#contenedor-contactos");
+    $contenedor.empty();
+
+    $.each(lista, function (indice, contacto) {
+        const idUnica = `contacto_${indice}`;
+
+        const nombreAMostrar = contacto.alias
+            ? `${contacto.nombre} (${contacto.alias})`
+            : contacto.nombre;
+
+        // Estructura nueva usando d-flex para separar el nombre del botón de eliminar
+        const estructuraContacto = `
+            <div class="d-flex align-items-center mb-2 w-100 gap-2">
+                <!-- El radio original oculto de Bootstrap -->
+                <input type="radio" class="btn-check" name="contacto" id="${idUnica}" value="${contacto.cuenta}">
+                
+                <!-- El label ahora tiene flex-grow-1 para ocupar todo el espacio izquierdo -->
+                <label class="btn btn-outline-primary text-start p-3 flex-grow-1" for="${idUnica}">
+                    ${nombreAMostrar}
+                </label>
+                
+                <!-- El botón de eliminar alineado a la derecha -->
+                <button type="button" class="btn bg-dark p-3 btn-eliminar-contacto" data-indice="${indice}" title="Eliminar contacto">
+                    ❌
+                </button>
+            </div>
+        `;
+
+        $contenedor.append(estructuraContacto);
+    });
+    $contenedor.off("click", ".btn-eliminar-contacto").on("click", ".btn-eliminar-contacto", function (e) {
+        e.preventDefault(); 
+
+        const indiceABorrar = $(this).data("indice");
+        let listaOriginal = JSON.parse(localStorage.getItem("misContactos")) || [];
+
+        if (textoBuscar.trim() !== "") {
+            const cuentaBuscada = lista[indiceABorrar].cuenta;
+            listaOriginal = listaOriginal.filter(c => c.cuenta !== cuentaBuscada);
+        } else {
+            listaOriginal.splice(indiceABorrar, 1);
+        }
+
+        if (listaOriginal.length === 0) {
+            localStorage.removeItem("misContactos");
+        } else {
+            localStorage.setItem("misContactos", JSON.stringify(listaOriginal));
+        }
+
+        mostrarContactosEnCheck(textoBuscar);
+    });
+
+    $contenedor.off("change", "input[name='contacto']").on("change", "input[name='contacto']", function () {
+        $("#btn-transferir").removeClass("d-none").hide().fadeIn(400);
+    });
+
+
+    $contenedor.on("change", "input[name='contacto']", function () {
+        $("#btn-transferir").removeClass("d-none").hide().fadeIn(400);
+    });
 }
 
 const salt = "AlK3-W4ll3t_T4l3nt0-D1git4L_2026";

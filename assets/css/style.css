@@ -236,3 +236,24 @@ a.active-nav-link .icono-mas {
   }
 
 }
+
+/* Contenedor de contactos para que no se alargue a lo alto la pantalla */
+#contenedor-contactos {
+  max-height: 320px; 
+  overflow-y: auto;  
+  padding-right: 8px; 
+  -webkit-overflow-scrolling: touch; 
+}
+
+#contenedor-contactos::-webkit-scrollbar {
+  width: 6px;
+}
+
+#contenedor-contactos::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+[data-bs-theme="dark"] #contenedor-contactos::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
