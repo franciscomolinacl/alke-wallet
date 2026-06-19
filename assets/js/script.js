@@ -18,7 +18,6 @@ function pagIndex() {
 function pagLogin() {
     Utils.loginPag();
     Utils.modoDarkLight();
-    Utils.activarValidacion();
     Utils.mostrarOcultarPass();
     Utils.primerUsuario();
     Utils.loginActivo("pagLogin");
@@ -28,7 +27,6 @@ function pagLogin() {
 function pagRegister() {
     Utils.registerPag();
     Utils.modoDarkLight();
-    Utils.activarValidacion();
     Utils.mostrarOcultarPass();
     Utils.loginActivo("pagRegister");
 }
@@ -37,7 +35,6 @@ function pagRegister() {
 function pagRecovery() {
     Utils.recoveryPag();
     Utils.modoDarkLight();
-    Utils.activarValidacion();
     Utils.loginActivo("pagRecovery");
 }
 
@@ -46,7 +43,6 @@ function pagReset() {
     Utils.resetPag();
     Utils.modoDarkLight();
     Utils.mostrarOcultarPass();
-    Utils.activarValidacion();
     Utils.loginActivo("pagReset");
 }
 

@@ -156,12 +156,12 @@
       <div class="card bg-card p-4 rounded-4 shadow-lg border-0 mb-5">
         <h6 class="fw-bold mb-3 text-secondary text-center">Depositar</h6>
         <div class="row text-center g-3">
-          <form class="col-12 col-md-6 mx-auto" id="formDeposit">
+          <form class="col-12 col-md-6 mx-auto needs-validation" id="formDeposit" novalidate>
             <div class="row align-items-center mb-3">
               <label for="deposito" class="col-12 col-md-4 p-3">Monto a depositar</label>
               <div class="col-12 col-md-8">
                 <!-- tipo number para que solo se puedan incluir numeros -->
-                <input class="form-control p-3 text-center" type="number" min="0" name="deposito" id="deposito" />
+                <input class="form-control p-3 text-center" type="number" min="0" name="deposito" id="deposito" required />
               </div>
             </div>
 
@@ -188,7 +188,7 @@
     </div>
   </main>
 
-  <footer class="fixed-bottom border-top border-secondary text-center text-secondary small bg-body">
+  <footer class="fixed-bottom border-top border-secondary text-center text-secondary small bg-nav">
     <!-- Footer pantallas grandes -->
     <div class="d-none d-md-block border-top border-secondary py-3">
       <div class="d-flex align-items-center justify-content-between container">
@@ -231,7 +231,7 @@
         </div>
 
         <div class="col">
-          <a href="./profile.html" class="text-decoration-none">
+          <a href="./perfil.html" class="text-decoration-none">
             <div class="icono-perfil mx-auto mb-1"></div>
             <span>Perfil</span>
           </a>

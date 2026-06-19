@@ -16,60 +16,58 @@ export function modoDarkLight() {
 }
 
 // Validadción campos vacios en formularios
-export function activarValidacion() {
-    const forms = document.querySelectorAll(".needs-validation");
+const activarValidacion = function () {
+    $(document).off("submit", ".needs-validation").on("submit", ".needs-validation", function (event) {
+        const form = this;
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
 
-    Array.from(forms).forEach((form) => {
-        form.addEventListener("submit", (event) => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
+            form.querySelectorAll("input[required], select[required]").forEach((input) => {
+                const inputGroup = input.closest(".input-group");
+                const iconoBlock = inputGroup ? inputGroup.querySelector(".input-group-text") : null;
+                if (!input.checkValidity() && iconoBlock) {
+                    iconoBlock.classList.add("border-danger", "text-danger");
+                }
+                const elementoSiguiente = inputGroup ? inputGroup.nextElementSibling : input.nextElementSibling;
+                const yaExisteError = elementoSiguiente?.classList.contains("invalid-feedback");
+                if (!input.checkValidity() && !yaExisteError) {
+                    const errorDiv = document.createElement("div");
+                    errorDiv.className = "invalid-feedback d-block mb-3 text-center";
 
-                form.querySelectorAll("input[required], select[required]").forEach((input) => {
-                    const inputGroup = input.closest(".input-group");
-                    const iconoBlock = inputGroup ? inputGroup.querySelector(".input-group-text") : null;
-                    if (!input.checkValidity() && iconoBlock) {
-                        iconoBlock.classList.add("border-danger", "text-danger");
-                    }
-                    const elementoSiguiente = inputGroup ? inputGroup.nextElementSibling : input.nextElementSibling;
-                    const yaExisteError = elementoSiguiente?.classList.contains("invalid-feedback");
-                    if (!input.checkValidity() && !yaExisteError) {
-                        const errorDiv = document.createElement("div");
-                        errorDiv.className = "invalid-feedback d-block mb-3 text-center";
-
-                        // Asigno textos segun el tipo de campo
-                        if (input.type === "email") {
-                            $("#email").removeClass("is-valid");
-                            $("#email").addClass("is-invalid");
-                            errorDiv.innerText = "Por favor, escribe un correo electrónico válido.";
-                        } else if (input.type === "password") {
-                            $(".input-password").removeClass("is-valid");
-                            $(".input-password").addClass("is-invalid");
-                            errorDiv.innerText = "La contraseña no puede quedar vacía.";
-                        } else {
-                            input.classList.remove("is-valid");
-                            input.classList.add("is-invalid");
-                            errorDiv.innerText = "Este campo es obligatorio.";
-                        }
-
-                        if (inputGroup) {
-                            inputGroup.after(errorDiv);
-                        } else {
-                            input.after(errorDiv);
-                        }
+                    // Asigno textos segun el tipo de campo
+                    if (input.type === "email") {
+                        $("#email").removeClass("is-valid");
+                        $("#email").addClass("is-invalid");
+                        errorDiv.innerText = "Por favor, escribe un correo electrónico válido.";
+                    } else if (input.type === "password") {
+                        $(".input-password").removeClass("is-valid");
+                        $(".input-password").addClass("is-invalid");
+                        errorDiv.innerText = "La contraseña no puede quedar vacía.";
                     } else {
-                        input.classList.add("is-valid");
+                        input.classList.remove("is-valid");
+                        input.classList.add("is-invalid");
+                        errorDiv.innerText = "Este campo es obligatorio.";
                     }
-                });
-            }
-        }, false);
+
+                    if (inputGroup) {
+                        inputGroup.after(errorDiv);
+                    } else {
+                        input.after(errorDiv);
+                    }
+                } else {
+                    input.classList.add("is-valid");
+                }
+            });
+        }
+
+
 
     });
 }
 
 export function loginPag() {
-    let loginExitoso = false;
-
+    activarValidacion();
     if ($("#formLogin").length) {
         $("#formLogin").submit(function (evento) {
             evento.preventDefault();
@@ -88,7 +86,6 @@ export function loginPag() {
                 );
 
                 if (usuarioEncontrado) {
-                    loginExitoso = true;
                     localStorage.setItem("login", "true");
                     localStorage.setItem("usuario_logueado", usuarioEncontrado.email);
                     $("#email, #password").removeClass("is-invalid");
@@ -120,6 +117,7 @@ export function loginPag() {
 }
 
 export function registerPag() {
+    activarValidacion();
     if ($("#formRegister").length) {
         $("#formRegister").submit(function (evento) {
             evento.preventDefault();
@@ -177,6 +175,7 @@ export function registerPag() {
 }
 
 export function recoveryPag() {
+    activarValidacion();
     if ($("#formRecovery").length) {
         $("#formRecovery").submit(function (evento) {
             evento.preventDefault();
@@ -220,6 +219,7 @@ export function recoveryPag() {
 }
 
 export function resetPag() {
+    activarValidacion();
     const permiso = localStorage.getItem("permiso_reset");
 
     if (permiso === null) {
@@ -824,6 +824,7 @@ export function salir() {
     }
 }
 
+// Calculo de estadisticas para pagina transacciones
 export function calcularEstadisticas() {
     const datosStorage = localStorage.getItem("transacciones");
     if (!datosStorage) return;
