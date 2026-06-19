@@ -257,3 +257,25 @@ a.active-nav-link .icono-mas {
 [data-bs-theme="dark"] #contenedor-contactos::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+
+/* Contenedor del historial de movimientos */
+#contenedor-transacciones {
+  max-height: 380px;
+  overflow-y: auto;  
+  padding-right: 8px; 
+  -webkit-overflow-scrolling: touch; 
+}
+
+#contenedor-transacciones::-webkit-scrollbar {
+  width: 6px;
+}
+
+#contenedor-transacciones::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+[data-bs-theme="dark"] #contenedor-transacciones::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15); 
+}

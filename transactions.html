@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
+  <title>Alke Wallet - Historial</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-body text-body d-none" id="pagHistorial">
+
+  <!-- Menu navbar para pantallas grandes - Inicio -->
+  <nav class="navbar d-none d-md-block navbar-expand-lg bg-nav py-3 border-bottom border-secondary">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+      <div class="navbar-brand m-0">
+        <img src="./assets/img/logo-hor.webp" class="logo-hor" alt="Alke Wallet">
+      </div>
+
+      <div id="navbarNavAltMarkup" class="d-flex align-items-center">
+        <div class="d-flex gap-4 text-center fs-menu">
+
+          <div>
+            <a href="./menu.html" class="text-decoration-none d-block">
+              <div class="icono-home mx-auto mb-1"></div>
+              <span>Inicio</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./deposit.html" class="text-decoration-none d-block">
+              <div class="icono-deposit mx-auto mb-1"></div>
+              <span>Depositar</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./sendmoney.html" class="text-decoration-none d-block">
+              <div class="icono-transfer mx-auto mb-1"></div>
+              <span>Transferir</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./transactions.html" class="text-decoration-none active-nav-link d-block">
+              <div class="icono-history mx-auto mb-1"></div>
+              <span>Historial</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./perfil.html" class="text-decoration-none d-block">
+              <div class="icono-perfil mx-auto mb-1"></div>
+              <span>Perfil</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="./more.html" class="text-decoration-none d-block">
+              <div class="icono-mas mx-auto mb-1"></div>
+              <span>Otros</span>
+            </a>
+          </div>
+
+          <div>
+            <a href="#" class="text-decoration-none d-block" id="btnSalir">
+              <div class="icono-salir mx-auto mb-1"></div>
+              <span>Salir</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <main class="mb-5">
+
+    <!-- Nombre usuario y saldo en moviles - Inicio -->
+    <div class="d-md-none card-saldo text-white p-4 mb-6 shadow-sm">
+      <div class="d-flex align-items-center mb-3">
+        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial"></div>
+        <div class="ms-3">
+          <p class="mb-0 text-wallet-light small">Hola,</p>
+          <h5 class="mb-0 fw-bold nombre-usuario"></h5>
+        </div>
+      </div>
+
+      <div class="mt-2 text-center text-md-start">
+        <small class="text-wallet-light d-block">Saldo Disponible</small>
+        <h2 class="display-5 fw-bold my-1 saldo-usuario"></h2>
+      </div>
+    </div>
+
+    <!-- Contenedor flotante -->
+    <div class="contenedor-flotante-subir ">
+
+      <!-- Nombre usuario y saldo en pantallas grandes -->
+      <div class="row g-3 mb-4 d-none d-md-flex">
+
+        <div class="col-12 col-md-6">
+          <div class="card bg-fondo p-4 h-100 shadow-sm border-0">
+            <div class="d-flex align-items-center h-100">
+              <div
+                class="rounded-circle d-flex align-items-center justify-content-center fw-bold avatar-inicial shadow-sm">
+              </div>
+              <div class="ms-3">
+                <p class="mb-0 text-secondary small">Hola,</p>
+                <h5 class="mb-0 fw-bold nombre-usuario"></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="card card-saldo text-white p-4 h-100 shadow-sm border-0">
+            <div class="text-center text-md-start d-flex flex-column justify-content-center h-100">
+              <small class="text-wallet-light d-block text-uppercase">Saldo Disponible</small>
+              <h2 class="display-5 fw-bold my-1 saldo-usuario"></h2>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Menu flotante -->
+      <div class="card bg-card p-3 rounded-4 border-0 mb-4 menu-flotante d-md-none">
+        <div class="row text-center">
+          <div class="col-4">
+            <a href="./deposit.html" class="text-decoration-none">
+              <div class="icono-deposit mx-auto mb-1"></div>
+              <small class="fw-medium">Depositar</small>
+            </a>
+          </div>
+          <div class="col-4">
+            <a href="./sendmoney.html" class="text-decoration-none">
+              <div class="icono-transfer mx-auto mb-1"></div>
+              <small class="fw-medium">Transferir</small>
+            </a>
+          </div>
+          <div class="col-4">
+            <a href="./transactions.html" class="text-decoration-none">
+              <div class="icono-history mx-auto mb-1"></div>
+              <small class="fw-medium">Historial</small>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Últimos Movimientos -->
+      <div class="card bg-card p-4 rounded-4 shadow-lg border-0 mb-5">
+        <h6 class="fw-bold mb-3 text-secondary text-center">Últimos Movimientos</h6>
+        <div class="row text-center g-3">
+
+          <div class="mb-4">
+            <label for="filtro-movimientos" class="form-label fw-bold">Filtrar por tipo:</label>
+            <select id="filtro-movimientos" class="form-select p-3">
+              <option value="todos">Todos los movimientos</option>
+              <option value="deposito">Depósitos</option>
+              <option value="transferencia">Transferencias</option>
+            </select>
+          </div>
+
+          <!-- Contenedor donde se inyectan las tarjetas -->
+          <div id="contenedor-transacciones"></div>
+          <div class="modal fade" id="salida" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body d-flex justify-content-between align-items-center">
+                  <span>Saliendo de la aplicación...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de salida -->
+    <div class="modal fade" id="salida" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body d-flex justify-content-between align-items-center">
+            <span>Saliendo de la aplicación...</span>
+            <span class="spinner-border spinner-border-sm me-2" id="btn-spinner" role="status"
+              aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="fixed-bottom border-top border-secondary text-center text-secondary small bg-body">
+    <!-- Footer pantallas grandes -->
+    <div class="d-none d-md-block border-top border-secondary py-3">
+      <div class="d-flex align-items-center justify-content-between container">
+
+        <div class="text-center flex-grow-1">
+          <p class="m-0 small">
+            &copy; 2026 Alke Wallet <br>
+            Evaluación Módulo 2 Talento Digital <br>
+            <a href="https://www.franciscomolina.cl" target="_blank" class="text-decoration-none fw-medium">Francisco
+              Molina</a>
+          </p>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <div class="form-check form-switch custom-switch-container m-0">
+            <input class="form-check-input switch-iconos" type="checkbox" role="switch" id="btnDarkLight">
+            <label class="form-check-label visually-hidden" for="btnDarkLight">Cambiar modo</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Menu footer moviles -->
+    <nav class="container bg-nav py-2 d-md-none">
+      <div class="row text-center fs-menu">
+
+        <div class="col">
+          <a href="./menu.html" class="text-decoration-none">
+            <div class="icono-home mx-auto mb-1"></div>
+            <span>Inicio</span>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="./sendmoney.html" class="text-decoration-none">
+            <div class="icono-transfer mx-auto mb-1"></div>
+            <span>Transferir</span>
+          </a>
+        </div>
+
+        <div class="col">
+          <a href="./profile.html" class="text-decoration-none">
+            <div class="icono-perfil mx-auto mb-1"></div>
+            <span>Perfil</span>
+          </a>
+        </div>
+        <div class="col">
+          <a href="./more.html" class="text-decoration-none">
+            <div class="icono-mas mx-auto mb-1"></div>
+            <span>Otros</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./assets/js/script.js" type="module"></script>
+
+</body>
+
+</html>
