@@ -201,12 +201,19 @@ a.active-nav-link div {
 }
 
 a.active-nav-link .icono-home,
+a.active-nav-link .icono-deposit,
 a.active-nav-link .icono-transfer,
-a.active-nav-link .icono-perfil {
+a.active-nav-link .icono-history,
+a.active-nav-link .icono-perfil,
+a.active-nav-link .icono-mas {
   opacity: 1 !important;
   filter: invert(100%) sepia(50%) saturate(50%) hue-rotate(0deg) brightness(150%) contrast(100%);
 }
 
+.logo-hor{
+   height: 40px; 
+   width: auto;
+}
 
 /* Solo moviles */
 @media (max-width: 767.98px) {
