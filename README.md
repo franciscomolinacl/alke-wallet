@@ -2,6 +2,8 @@
 
 ¡Bienvenido al repositorio de **AlK3 Wallet**! Este es un proyecto educativo diseñado para simular el comportamiento de una billetera digital, enfocándose en la lógica de registro, inicio de sesión seguro y recuperación de contraseñas.
 
+🌐 **[¡Haz clic aquí para probar la aplicación en vivo en GitHub Pages!] https://franciscomolinacl.github.io/alke-wallet/**
+
 ---
 
 ## 🚀 Funcionalidades Principales
@@ -12,6 +14,11 @@ El sistema cuenta con las siguientes pantallas y lógicas de programación:
 *   **Página de Registro (`register.html`):** Crea nuevos usuarios capturando su nombre, correo, fecha de nacimiento y clave. Valida que los datos estén completos y que el formato del correo sea el correcto antes de guardarlo.
 *   **Recuperación de Datos (`recovery.html`):** Solicita el correo, nombre y nacimiento del usuario. Si coinciden con los registros, le otorga un permiso especial para continuar.
 *   **Restablecer Clave (`reset.html`):** Permite ingresar la nueva contraseña por duplicado. Verifica que ambas coincidan perfectamente antes de guardarla. Cuenta con un sistema de seguridad por CSS que bloquea el acceso si no pasaste por la pantalla de recuperación.
+*   **Menú Principal (`menu.html`):** Panel central del usuario que muestra de forma dinámica su saludo con iniciales y su saldo. Cuenta con un diseño adaptativo elástico y un menú lateral (Offcanvas) para la versión móvil.
+*   **Página de Depósitos (`deposit.html`):** Permite abonar montos reales a la cuenta del usuario conectado, actualizando su saldo de forma segura y gatillando alertas temporizadas con efecto *fade*.
+*   **Historial de Movimientos (`transactions.html`):** Se comporta en PC como un Dashboard Financiero de nivel ejecutivo, mostrando un panel con estadísticas de ingresos, gastos y balance neto calculados en tiempo real.
+*   **Módulo de Transferencias (`sendmoney.html`):** Permite gestionar una agenda privada de contactos por usuario (con buscador dinámico y opción de eliminar ❌). Al enviar dinero, emite un Comprobante de Transferencia en un Modal interactivo con botón visual para compartir.
+
 
 ---
 
@@ -37,6 +44,10 @@ La página `reset.html` está protegida para evitar accesos directos escribiendo
 
 ### 3. Funciones Reutilizables
 El botón para mostrar u ocultar el texto de la contraseña (el ícono del ojo) fue optimizado usando clases de jQuery en lugar de selectores de identificación fija (ID). Gracias a esto, funciona simultáneamente para múltiples campos en una misma ventana sin duplicar código.
+
+### 4. Automatización con Git-Helper Personalizado
+Para garantizar la consistencia en el flujo de trabajo profesional, se desarrolló un asistente interactivo en Bash (`git-helper.sh`). Esta herramienta automatiza las revisiones de seguridad de la carpeta, la creación y viaje entre ramas, y estandariza los mensajes de confirmación bajo la convención internacional de *Conventional Commits* (`feat:`, `fix:`, `style:`).
+
 
 ---
 
