@@ -18,7 +18,6 @@ function pagIndex() {
 function pagLogin() {
     Utils.loginPag();
     Utils.modoDarkLight();
-    Utils.activarValidacion();
     Utils.mostrarOcultarPass();
     Utils.primerUsuario();
     Utils.loginActivo("pagLogin");
@@ -28,7 +27,6 @@ function pagLogin() {
 function pagRegister() {
     Utils.registerPag();
     Utils.modoDarkLight();
-    Utils.activarValidacion();
     Utils.mostrarOcultarPass();
     Utils.loginActivo("pagRegister");
 }
@@ -37,7 +35,6 @@ function pagRegister() {
 function pagRecovery() {
     Utils.recoveryPag();
     Utils.modoDarkLight();
-    Utils.activarValidacion();
     Utils.loginActivo("pagRecovery");
 }
 
@@ -46,7 +43,6 @@ function pagReset() {
     Utils.resetPag();
     Utils.modoDarkLight();
     Utils.mostrarOcultarPass();
-    Utils.activarValidacion();
     Utils.loginActivo("pagReset");
 }
 
@@ -66,17 +62,17 @@ function pagDeposito() {
     Utils.cargarDatosUsuario();
     Utils.saldoCaja();
     Utils.loginActivo("pagDeposito");
-    Utils.salir();    
+    Utils.salir();
 }
 
 // Pagina Transferir
 function pagTransferir() {
     Utils.transferirPag();
-    Utils.modoDarkLight();  
+    Utils.modoDarkLight();
     Utils.cargarDatosUsuario();
     Utils.saldoCaja();
     Utils.loginActivo("pagTransferir");
-    Utils.salir();    
+    Utils.salir();
 }
 
 // Pagina Historial
@@ -84,9 +80,9 @@ function pagHistorial() {
     Utils.historialPag();
     Utils.modoDarkLight();
     Utils.cargarDatosUsuario();
-    Utils.saldoCaja();    
+    Utils.saldoCaja();
     Utils.loginActivo("pagHistorial");
-    Utils.salir();    
+    Utils.salir();
 }
 
 // Registro de funciones de paginas
